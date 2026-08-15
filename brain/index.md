@@ -1,6 +1,6 @@
 # Brain Index
 
-_Auto-generated. Last updated 2026-08-15T06:40:54.217Z._
+_Auto-generated. Last updated 2026-08-15T06:59:28.900Z._
 
 - [audio-standard](pages/audio-standard.md) — category: decision | # Standardized audio for the benchmark
 - [command-code-role](pages/command-code-role.md) — category: decision | # Command Code's role: implementation agent
@@ -9,6 +9,7 @@ _Auto-generated. Last updated 2026-08-15T06:40:54.217Z._
 - [engine-selection-pending](pages/engine-selection-pending.md) — category: decision | # No TTS engine selected yet
 - [flutter-deferred](pages/flutter-deferred.md) — category: decision | # Flutter frontend deferred
 - [git-workflow](pages/git-workflow.md) — category: decision | # Git workflow rules
+- [hybrid-tts-experiment](pages/hybrid-tts-experiment.md) — category: project | # Hybrid Nepali+English TTS experiment
 - [open-questions](pages/open-questions.md) — category: project | # Unresolved technical questions & decisions needing review
 - [piper-nepali-voices](pages/piper-nepali-voices.md) — category: decision | # Verified: Piper has working Nepali voices
 - [piper-performance-baseline](pages/piper-performance-baseline.md) — category: reference | # Piper M1 CPU performance baseline

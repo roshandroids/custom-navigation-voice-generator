@@ -240,6 +240,43 @@ problems are part of the benchmark.
 > some phrases during generation — flag any audible artifacts for those files during
 > listening.
 
+---
+
+## Hybrid Nepali/English experiment (2026-08-15)
+
+**Question:** Can separate Nepali (ne_NP-chitwan-medium) and English (en_US-joe-medium)
+Piper voices, stitched together, produce a more understandable mixed-language
+navigation voice than the Nepali voice alone?
+
+**Files to listen to** — `benchmark/output/hybrid/<phrase_id>/`:
+
+- `version_a.wav` — whole phrase, Nepali voice only (status quo)
+- `version_b.wav` — Nepali voice for Nepali segments + English voice for English segments (stitched)
+- `version_c.wav` — whole phrase, Nepali voice, English words in phonetic Nepali spelling
+
+**Key question:** does the hybrid (B) make English significantly easier to understand
+while remaining natural enough for navigation? Scores are **blank** — fill in during
+listening (1 = poor, 5 = excellent).
+
+| Phrase | Version A | Version B | Version C | English Clarity | Naturalness | Navigation Suitability | Notes |
+| ------ | --------- | --------- | --------- | --------------- | ----------- | ---------------------- | ----- |
+| hybrid_001 (ल भाइ, अगाडि speed camera छ। अब बिस्तारै।) | | | | | | | |
+| hybrid_002 (अगाडि red light camera छ है।) | | | | | | | |
+| hybrid_003 (Keep right है, अगाडि exit आउँदैछ।) | | | | | | | |
+| hybrid_004 (500 meters पछि keep left गर्नुहोस्।) | | | | | | | |
+| hybrid_005 (अगाडि traffic छ, अलि बिस्तारै जाऊ।) | | | | | | | |
+| hybrid_006 (U-turn लिनुपर्ने छ।) | | | | | | | |
+| hybrid_007 (Exit अगाडि नै छ।) | | | | | | | |
+| hybrid_008 (आज police अगाडि छन् है।) | | | | | | | |
+| hybrid_009 (Waze ले route change गरेको छ।) | | | | | | | |
+| hybrid_010 (Speed घटाऊ, अगाडि camera छ।) | | | | | | | |
+
+**Listen for:** English pronunciation in A vs B, voice-switch naturalness, unnatural
+pauses, robotic delivery, number/unit handling (500 meters), and whether the hybrid
+sounds like a coherent navigation voice or a jarring alternation.
+
+---
+
 ## Evaluation dimensions (future work)
 
 - **Naturalness** (human listening)

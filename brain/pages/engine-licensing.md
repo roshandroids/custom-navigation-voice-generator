@@ -4,7 +4,7 @@ title: TTS engine licensing research record
 category: reference
 status: active
 created: "2026-08-15T02:15:34"
-updated: "2026-08-15T02:36:14"
+updated: "2026-08-15T02:59:28"
 ---
 
 <!-- compiled_truth -->
@@ -48,3 +48,9 @@ Related: [[tts-candidates]], [[piper-nepali-voices]].
   summary: "Piper licensing verified by experiment; reversal recorded"
   source: piper experiment 2026-08-15
   affects: [engine-licensing]
+
+- time: 2026-08-15T02:59:28
+  kind: evidence
+  summary: "en_US-joe-medium verified: CC0 dataset (OHF-Voice/voice-datasets), 22,050 Hz, finetuned from lessac — selected for hybrid experiment. en_US-ryan-medium (CC BY-NC-SA, non-commercial) and en_US-lessac-medium (research-only license) rejected for commercial suitability."
+  source: hybrid experiment 2026-08-15
+  affects: [engine-licensing, hybrid-tts-experiment]
