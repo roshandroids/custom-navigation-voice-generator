@@ -1,0 +1,40 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ---- Generated audio (never commit benchmark output) ----
+benchmark/output/**/*
+!benchmark/output/.gitkeep
+
+# ---- Benchmark results (machine-generated; committed docs only) ----
+benchmark/results/**/*
+!benchmark/results/.gitkeep
+!benchmark/results/README.md
+
+# ---- TTS engine artifacts (models, voices, per-engine venvs) ----
+benchmark/engines/*/models/
+benchmark/engines/*/voices/
+benchmark/engines/*/.venv/
+benchmark/engines/*/model/
+benchmark/engines/*/weights/
+
+# ---- macOS ----
+.DS_Store
+
+# ---- Editors ----
+.idea/
+.vscode/
+*.swp
+
+# ---- Local tool state (not part of the project) ----
+.commandcode/

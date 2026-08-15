@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "navigation-voice-tts-benchmark"
+version = "0.1.0"
+description = "TTS engine benchmark for Nepali navigation voice instructions (evaluation prototype)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Custom Navigation Voice Generator contributors" }]
+keywords = ["tts", "benchmark", "nepali", "navigation", "waze"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+benchmark-run = "benchmark.scripts.run_benchmark:main"
+corpus-validate = "benchmark.scripts.validate_corpus:main"
+corpus-add-phrase = "tools.add_phrase:main"
+
+[tool.setuptools]
+packages = [
+    "benchmark",
+    "benchmark.core",
+    "benchmark.engines",
+    "benchmark.engines.dummy",
+    "benchmark.engines.piper",
+    "benchmark.engines.kokoro",
+    "benchmark.engines.qwen3",
+    "benchmark.engines.chatterbox",
+    "benchmark.scripts",
+    "tools",
+]
+
+[tool.setuptools.package-data]
+"benchmark.corpus" = ["phrases.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = [".venv", "benchmark/output", "benchmark/results"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["B008"]
