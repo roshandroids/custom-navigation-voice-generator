@@ -4,7 +4,7 @@ title: "Hybrid Nepali+English TTS experiment (2026-08-15)"
 category: project
 status: active
 created: "2026-08-15T02:57:58"
-updated: "2026-08-15T03:07:02"
+updated: "2026-08-15T12:26:08"
 ---
 
 <!-- compiled_truth -->
@@ -44,3 +44,8 @@ Related: [[voice-pack-single-language]], [[piper-nepali-voices]], [[engine-licen
   summary: "requirement clarified: single-language voice packs; hybrid is experimental/not-MVP"
   source: product requirement clarification 2026-08-15
   affects: [hybrid-tts-experiment]
+
+- time: 2026-08-15T12:26:08
+  kind: decision
+  summary: "Corpus rewrite (2026-08-15): product Nepali phrases no longer contain Latin English; humor_002 kept as the only deliberate ne-en language-test phrase. Hybrid remains experimental/historical — not MVP."
+  affects: [voice-pack-single-language, nepali-content-principle]

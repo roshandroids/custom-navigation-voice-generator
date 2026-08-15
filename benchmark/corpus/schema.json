@@ -28,7 +28,8 @@
         "tts_text": { "type": ["string", "null"] },
         "expected_pronunciation": { "type": ["string", "null"] },
         "description": { "type": ["string", "null"] },
-        "tags": { "type": "array", "items": { "type": "string" } }
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "review_status": { "type": "string", "enum": ["draft", "needs-review", "approved"] }
       },
       "additionalProperties": true
     }

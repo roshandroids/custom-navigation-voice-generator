@@ -1,10 +1,12 @@
 {
   "$schema": "./schema.json",
-  "version": 1,
+  "version": 2,
   "description": "Standardized navigation phrase corpus for TTS engine benchmarking. Each phrase has a stable ID. Language codes: ne (Nepali), en (English), ne-en (mixed). 'text' is the exact phrase to synthesize; 'display_text' is an optional human-readable form for mixed phrases (TTS engines may not accept Devanagari script, so the tts_text field is provided where a Latin-script rendering is required).",
   "metadata_notes": {
     "tts_text": "Latin-script rendering of the phrase, for engines that cannot process Devanagari script (e.g. some English-only models). null when the original text is already Latin script.",
-    "expected_pronunciation": "Informal pronunciation guidance for the Nepali portions. Benchmark example material, not final product copy."
+    "expected_pronunciation": "Informal pronunciation guidance for the Nepali portions. Benchmark example material, not final product copy.",
+    "review_status": "Content review status: 'draft', 'needs-review', or 'approved'. Rewritten phrases are initially 'needs-review' — native-speaker review is required before the corpus is considered final.",
+    "content_principles": "Nepali phrases are authored as native conversational Nepali (not literal translations of English). Borrowed English-origin words (स्पिड, क्यामेरा, ट्राफिक, पुलिस) are written in Devanagari when that is what a Nepali speaker would naturally say. Personality modifies wording/delivery while preserving navigation meaning."
   },
   "phrases": [
     {
@@ -14,10 +16,8 @@
       "text": "देब्रे मोड्नुहोस्।",
       "tts_text": "Debre modnuhos.",
       "expected_pronunciation": "Nepali for 'turn left'; 'debre' = left, 'modnuhos' = please turn.",
-      "tags": [
-        "basic",
-        "short"
-      ]
+      "tags": ["basic", "short"],
+      "review_status": "needs-review"
     },
     {
       "id": "turn_right_001",
@@ -26,50 +26,36 @@
       "text": "दायाँ मोड्नुहोस्।",
       "tts_text": "Daya modnuhos.",
       "expected_pronunciation": "Nepali for 'turn right'; 'daya' = right.",
-      "tags": [
-        "basic",
-        "short"
-      ]
+      "tags": ["basic", "short"],
+      "review_status": "needs-review"
     },
     {
       "id": "turn_left_002",
       "category": "directions",
       "language": "en",
       "text": "Turn left.",
-      "tags": [
-        "basic",
-        "short"
-      ]
+      "tags": ["basic", "short"]
     },
     {
       "id": "turn_right_002",
       "category": "directions",
       "language": "en",
       "text": "Turn right.",
-      "tags": [
-        "basic",
-        "short"
-      ]
+      "tags": ["basic", "short"]
     },
     {
       "id": "keep_left_001",
       "category": "directions",
       "language": "en",
       "text": "Keep left.",
-      "tags": [
-        "basic",
-        "short"
-      ]
+      "tags": ["basic", "short"]
     },
     {
       "id": "keep_right_001",
       "category": "directions",
       "language": "en",
       "text": "Keep right.",
-      "tags": [
-        "basic",
-        "short"
-      ]
+      "tags": ["basic", "short"]
     },
     {
       "id": "keep_left_002",
@@ -78,18 +64,15 @@
       "text": "देब्रे बस्नुहोस्।",
       "tts_text": "Debre basnuhos.",
       "expected_pronunciation": "Nepali for 'keep left'; 'basnuhos' = please stay/remain.",
-      "tags": [
-        "basic"
-      ]
+      "tags": ["basic"],
+      "review_status": "needs-review"
     },
     {
       "id": "continue_straight_001",
       "category": "directions",
       "language": "en",
       "text": "Continue straight.",
-      "tags": [
-        "basic"
-      ]
+      "tags": ["basic"]
     },
     {
       "id": "continue_straight_002",
@@ -98,18 +81,15 @@
       "text": "सीधा जानुहोस्।",
       "tts_text": "Sidha januhos.",
       "expected_pronunciation": "Nepali for 'go straight'.",
-      "tags": [
-        "basic"
-      ]
+      "tags": ["basic"],
+      "review_status": "needs-review"
     },
     {
       "id": "uturn_001",
       "category": "directions",
       "language": "en",
       "text": "Make a U-turn.",
-      "tags": [
-        "basic"
-      ]
+      "tags": ["basic"]
     },
     {
       "id": "uturn_002",
@@ -118,103 +98,83 @@
       "text": "यू-टर्न लिनुहोस्।",
       "tts_text": "U-turn linuhos.",
       "expected_pronunciation": "Nepali for 'take a U-turn'; 'U' pronounced as the English letter.",
-      "tags": [
-        "basic",
-        "english_word"
-      ]
+      "tags": ["basic", "english_word"],
+      "review_status": "needs-review"
     },
     {
       "id": "roundabout_001",
       "category": "directions",
       "language": "en",
       "text": "At the roundabout, take the first exit.",
-      "tags": [
-        "medium"
-      ]
+      "tags": ["medium"]
     },
     {
       "id": "roundabout_002",
       "category": "directions",
-      "language": "ne-en",
-      "text": "राउन्डअबाउटमा पहिलो exit लिनुहोस्।",
-      "tts_text": "Roundaboutma pahilo exit linuhos.",
-      "expected_pronunciation": "Mixed Nepali/English: 'in the roundabout, take the first exit'.",
-      "tags": [
-        "mixed",
-        "english_word"
-      ]
+      "language": "ne",
+      "text": "राउन्डअबाउटमा पहिलो निकास लिनुहोस्।",
+      "tts_text": "Roundaboutma pahilo nikash linuhos.",
+      "expected_pronunciation": "Nepali: 'at the roundabout, take the first exit'; 'nikash' = exit.",
+      "tags": ["medium"],
+      "review_status": "needs-review"
     },
     {
       "id": "exit_001",
       "category": "directions",
       "language": "en",
       "text": "Take the next exit.",
-      "tags": [
-        "basic"
-      ]
+      "tags": ["basic"]
     },
     {
       "id": "exit_002",
       "category": "directions",
-      "language": "ne-en",
-      "text": "अगाडिको exit प्रयोग गर्नुहोस्।",
-      "tts_text": "Agadiko exit prayog garnuhos.",
-      "expected_pronunciation": "Mixed: 'use the upcoming exit'.",
-      "tags": [
-        "mixed",
-        "english_word"
-      ]
+      "language": "ne",
+      "text": "अगाडिको निकासबाट बाहिर निस्कनुहोस्।",
+      "tts_text": "Agadiko nikashbata bahira niskanuhos.",
+      "expected_pronunciation": "Nepali: 'go out from the upcoming exit'.",
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "distance_100m_001",
       "category": "distances",
       "language": "en",
       "text": "In 100 meters, turn left.",
-      "tags": [
-        "number"
-      ]
+      "tags": ["number"]
     },
     {
       "id": "distance_100m_002",
       "category": "distances",
       "language": "ne",
-      "text": "१०० मिटरपछि देब्रे मोड्नुहोस्।",
-      "tts_text": "100 meterpachhi debre modnuhos.",
+      "text": "एक सय मिटरपछि देब्रे मोड्नुहोस्।",
+      "tts_text": "Ek saya meterpachhi debre modnuhos.",
       "expected_pronunciation": "Nepali: 'after 100 meters, turn left'.",
-      "tags": [
-        "number",
-        "devanagari_number"
-      ]
+      "tags": ["number"],
+      "review_status": "needs-review"
     },
     {
       "id": "distance_500m_001",
       "category": "distances",
       "language": "en",
       "text": "In 500 meters, keep right.",
-      "tags": [
-        "number"
-      ]
+      "tags": ["number"]
     },
     {
       "id": "distance_500m_002",
       "category": "distances",
       "language": "ne",
-      "text": "५०० मिटरपछि देब्रे मोडिनुहोस्।",
-      "tts_text": "500 meterpachhi debre modinuhos.",
-      "expected_pronunciation": "Nepali: 'after 500 meters, turn left'. Uses Devanagari digits (५००).",
-      "tags": [
-        "number",
-        "devanagari_number"
-      ]
+      "text": "पाँच सय मिटरपछि दायाँ लाग्नुहोस्।",
+      "tts_text": "Panch saya meterpachhi daya lagnuhos.",
+      "expected_pronunciation": "Nepali: 'after 500 meters, take right'.",
+      "tags": ["number"],
+      "review_status": "needs-review"
     },
     {
       "id": "distance_1km_001",
       "category": "distances",
       "language": "en",
       "text": "In 1 kilometer, take the next exit.",
-      "tags": [
-        "number"
-      ]
+      "tags": ["number"]
     },
     {
       "id": "distance_1km_002",
@@ -223,55 +183,45 @@
       "text": "एक किलोमिटरपछि दायाँ मोड्नुहोस्।",
       "tts_text": "Ek kilometerpachhi daya modnuhos.",
       "expected_pronunciation": "Nepali: 'after 1 kilometer, turn right'.",
-      "tags": [
-        "number"
-      ]
+      "tags": ["number"],
+      "review_status": "needs-review"
     },
     {
       "id": "distance_200m_001",
       "category": "distances",
-      "language": "ne-en",
-      "text": "२०० मिटरपछि roundabout आउँछ।",
-      "tts_text": "200 meterpachhi roundabout auncha.",
-      "expected_pronunciation": "Mixed: 'after 200 meters there is a roundabout'.",
-      "tags": [
-        "number",
-        "mixed",
-        "english_word"
-      ]
+      "language": "ne",
+      "text": "दुई सय मिटरपछि राउन्डअबाउट आउँछ।",
+      "tts_text": "Dui saya meterpachhi roundabout auncha.",
+      "expected_pronunciation": "Nepali: 'after 200 meters there is a roundabout'.",
+      "tags": ["number"],
+      "review_status": "needs-review"
     },
     {
       "id": "distance_300m_001",
       "category": "distances",
       "language": "ne",
-      "text": "३०० मिटरपछि सीधा जानुहोस्।",
-      "tts_text": "300 meterpachhi sidha januhos.",
+      "text": "तीन सय मिटरपछि सीधा जानुहोस्।",
+      "tts_text": "Tin saya meterpachhi sidha januhos.",
       "expected_pronunciation": "Nepali: 'after 300 meters go straight'.",
-      "tags": [
-        "number",
-        "devanagari_number"
-      ]
+      "tags": ["number"],
+      "review_status": "needs-review"
     },
     {
       "id": "traffic_ahead_001",
       "category": "traffic",
-      "language": "ne-en",
+      "language": "ne",
       "text": "अगाडि ट्राफिक जाम छ।",
       "tts_text": "Agadi traffic jam chha.",
       "expected_pronunciation": "Nepali: 'there is a traffic jam ahead'.",
-      "tags": [
-        "mixed",
-        "english_word"
-      ]
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "traffic_ahead_002",
       "category": "traffic",
       "language": "en",
       "text": "Traffic ahead.",
-      "tags": [
-        "short"
-      ]
+      "tags": ["short"]
     },
     {
       "id": "traffic_heavy_001",
@@ -283,14 +233,12 @@
     {
       "id": "traffic_heavy_002",
       "category": "traffic",
-      "language": "ne-en",
+      "language": "ne",
       "text": "बाटोमा धेरै ट्राफिक छ।",
       "tts_text": "Batoma dherai traffic chha.",
       "expected_pronunciation": "Nepali: 'there is a lot of traffic on the road'.",
-      "tags": [
-        "mixed",
-        "english_word"
-      ]
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "accident_ahead_001",
@@ -306,7 +254,8 @@
       "text": "अगाडि दुर्घटना छ।",
       "tts_text": "Agadi durghatana chha.",
       "expected_pronunciation": "Nepali: 'there is an accident ahead'.",
-      "tags": []
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "hazard_ahead_001",
@@ -329,7 +278,8 @@
       "text": "अगाडि सडक मर्मत भइरहेको छ।",
       "tts_text": "Agadi sadak marma bhairakeko chha.",
       "expected_pronunciation": "Nepali: 'road maintenance is ongoing ahead'.",
-      "tags": []
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "road_closed_001",
@@ -345,36 +295,28 @@
       "text": "बाटो बन्द छ।",
       "tts_text": "Bato band chha.",
       "expected_pronunciation": "Nepali: 'the road is closed'.",
-      "tags": [
-        "short"
-      ]
+      "tags": ["short"],
+      "review_status": "needs-review"
     },
     {
       "id": "speed_camera_001",
       "category": "enforcement",
-      "language": "ne-en",
-      "text": "स्पिड क्यामेरा छ है। अब एक्सन हिरो नबन्!",
-      "tts_text": "Speed camera chha hai. Ab action hero nabana!",
-      "expected_pronunciation": "Humorous Nepali: 'there is a speed camera, don't be an action hero now!'",
-      "tags": [
-        "humor",
-        "mixed",
-        "english_word"
-      ]
+      "language": "ne",
+      "text": "अगाडि स्पिड क्यामेरा छ।",
+      "tts_text": "Agadi speed camera chha.",
+      "expected_pronunciation": "Nepali: 'there is a speed camera ahead'. Borrowed words 'speed' and 'camera' written in Devanagari as naturally used in spoken Nepali.",
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "speed_camera_002",
       "category": "enforcement",
-      "language": "ne-en",
-      "text": "ल भाइ, अगाडि स्पिड क्यामेरा छ। अलि बिस्तारै।",
-      "tts_text": "La bhai, agadi speed camera chha. Ali bistari.",
-      "expected_pronunciation": "Humorous Nepali: 'come on brother, there is a speed camera ahead, go a bit slowly'.",
-      "tags": [
-        "humor",
-        "mixed",
-        "english_word",
-        "conversational"
-      ]
+      "language": "ne",
+      "text": "ल, अगाडि स्पिड क्यामेरा छ है। अलि बिस्तारै जाऊ।",
+      "tts_text": "La, agadi speed camera chha hai. Ali bistari jau.",
+      "expected_pronunciation": "Conversational Nepali: 'hey, there is a speed camera ahead, go a bit slowly'.",
+      "tags": ["conversational"],
+      "review_status": "needs-review"
     },
     {
       "id": "speed_camera_003",
@@ -393,41 +335,36 @@
     {
       "id": "redlight_camera_002",
       "category": "enforcement",
-      "language": "ne-en",
-      "text": "अगाडि red-light क्यामेरा छ। रोकिनुहोस्।",
-      "tts_text": "Agadi red-light camera chha. Rokinuhos.",
-      "expected_pronunciation": "Mixed: 'there is a red-light camera ahead, stop'.",
-      "tags": [
-        "mixed",
-        "english_word"
-      ]
+      "language": "ne",
+      "text": "अगाडि रातो बत्ती भएको क्यामेरा छ। रोकिनुहोस्।",
+      "tts_text": "Agadi rato batti bhayeko camera chha. Rokinuhos.",
+      "expected_pronunciation": "Nepali: 'there is a camera with a red light ahead, stop'.",
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "police_001",
       "category": "enforcement",
       "language": "en",
       "text": "Police ahead.",
-      "tags": [
-        "short"
-      ]
+      "tags": ["short"]
     },
     {
       "id": "police_002",
       "category": "enforcement",
       "language": "ne",
-      "text": "अगाडि प्रहरी छ।",
-      "tts_text": "Agadi prahari chha.",
+      "text": "अगाडि पुलिस छ।",
+      "tts_text": "Agadi pulis chha.",
       "expected_pronunciation": "Nepali: 'police ahead'.",
-      "tags": []
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "arrival_001",
       "category": "arrival",
       "language": "en",
       "text": "You have arrived.",
-      "tags": [
-        "short"
-      ]
+      "tags": ["short"]
     },
     {
       "id": "arrival_002",
@@ -436,7 +373,8 @@
       "text": "तपाईं गन्तव्यमा पुग्नुभयो।",
       "tts_text": "Tapai gantavyama pugnu bhayou.",
       "expected_pronunciation": "Nepali: 'you have arrived at your destination'.",
-      "tags": []
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "arrival_003",
@@ -459,19 +397,18 @@
       "text": "तपाईंको गन्तव्य देब्रेतिर छ।",
       "tts_text": "Tapaiko gantavya debratira chha.",
       "expected_pronunciation": "Nepali: 'your destination is on the left'.",
-      "tags": []
+      "tags": [],
+      "review_status": "needs-review"
     },
     {
       "id": "humor_001",
       "category": "language_tests",
-      "language": "ne-en",
+      "language": "ne",
       "text": "फेरि यही बाटो? पक्का? लौ, ठीकै छ, जाऔँ।",
       "tts_text": "Pheri yahi bato? Pakka? Lau, thikai chha, jaun.",
       "expected_pronunciation": "Humorous conversational Nepali: 'this road again? are you sure? fine, let's go'.",
-      "tags": [
-        "humor",
-        "conversational"
-      ]
+      "tags": ["humor", "conversational"],
+      "review_status": "needs-review"
     },
     {
       "id": "humor_002",
@@ -479,21 +416,16 @@
       "language": "ne-en",
       "text": "Keep right है, अगाडि exit आउँदैछ।",
       "tts_text": "Keep right hai, agadi exit aundai chha.",
-      "expected_pronunciation": "Mixed: 'keep right, the exit is coming up'.",
-      "tags": [
-        "mixed",
-        "english_word"
-      ]
+      "expected_pronunciation": "Mixed: 'keep right, the exit is coming up'. Deliberate language test: Latin English through a Nepali voice.",
+      "tags": ["mixed", "english_word"],
+      "review_status": "needs-review"
     },
     {
       "id": "humor_003",
       "category": "language_tests",
       "language": "en",
       "text": "Turn left. No wait — turn right. Just kidding, left.",
-      "tags": [
-        "humor",
-        "conversational"
-      ]
+      "tags": ["humor", "conversational"]
     },
     {
       "id": "long_001",
@@ -502,10 +434,8 @@
       "text": "अबको दोस्रो गल्लीबाट देब्रे मोडेर सिधा जानुहोस्, त्यसपछि पहिलो बायाँबाट फेरि मोड्नुहोस्।",
       "tts_text": "Abko dosro gallibata debre moder sidha januhos, tyaspachhi pahilo bayabata pheri modnuhos.",
       "expected_pronunciation": "Long conversational Nepali instruction with two turns.",
-      "tags": [
-        "conversational",
-        "long"
-      ]
+      "tags": ["conversational", "long"],
+      "review_status": "needs-review"
     }
   ]
 }
