@@ -4,7 +4,7 @@ title: "Research finding: Piper has identifiable Nepali voices — first candida
 category: decision
 status: active
 created: "2026-08-15T02:14:41"
-updated: "2026-08-15T02:34:54"
+updated: "2026-08-15T02:40:54"
 ---
 
 <!-- compiled_truth -->
@@ -46,5 +46,11 @@ Blast radius: Piper is confirmed as the working baseline for the benchmark; the 
 - time: 2026-08-15T02:34:54
   kind: decision
   summary: "voice availability verified by experiment; research finding upgraded to verified"
+  source: piper experiment 2026-08-15
+  affects: [piper-nepali-voices]
+
+- time: 2026-08-15T02:40:54
+  kind: note
+  summary: "Quality signal: ne_NP-google-medium emitted 'Missing phoneme from id map: ʰ' warnings on some phrases during generation. Flag for human listening evaluation; not a generation failure."
   source: piper experiment 2026-08-15
   affects: [piper-nepali-voices]
