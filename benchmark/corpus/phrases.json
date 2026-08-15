@@ -143,13 +143,13 @@
       "id": "roundabout_002",
       "category": "directions",
       "language": "ne",
-      "text": "राउन्डअबाउटमा पहिलो निकास लिनुहोस्।",
-      "tts_text": "Roundaboutma pahilo nikash linuhos.",
-      "expected_pronunciation": "Nepali: 'at the roundabout, take the first exit'; 'nikash' = exit.",
+      "text": "गोलचक्करमा पहिलो निकास लिनुहोस्।",
+      "tts_text": "Golchakkarma pahilo nikash linuhos.",
+      "expected_pronunciation": "Nepali: 'at the roundabout, take the first exit'; 'golchakkar' = roundabout; 'nikash' = exit.",
       "tags": [
         "medium"
       ],
-      "review_status": "needs-review"
+      "review_status": "approved"
     },
     {
       "id": "exit_001",
@@ -164,11 +164,11 @@
       "id": "exit_002",
       "category": "directions",
       "language": "ne",
-      "text": "अगाडिको निकास लिनुहोस्।",
-      "tts_text": "Agadiko nikash linuhos.",
-      "expected_pronunciation": "Nepali: 'take the upcoming exit'; parallels the roundabout exit phrasing.",
+      "text": "अर्को निकास लिनुहोस्।",
+      "tts_text": "Arko nikash linuhos.",
+      "expected_pronunciation": "Nepali: 'take the next exit'; 'arko' = next.",
       "tags": [],
-      "review_status": "needs-review"
+      "review_status": "approved"
     },
     {
       "id": "distance_100m_001",
@@ -183,9 +183,9 @@
       "id": "distance_100m_002",
       "category": "distances",
       "language": "ne",
-      "text": "एक सय मिटरपछि देब्रे मोड्नुहोस्।",
-      "tts_text": "Ek saya meterpachhi debre modnuhos.",
-      "expected_pronunciation": "Nepali: 'after 100 meters, turn left'.",
+      "text": "सय मिटरपछि देब्रे मोड्नुहोस्।",
+      "tts_text": "Saya meterpachhi debre modnuhos.",
+      "expected_pronunciation": "Nepali: 'after 100 meters, turn left'; 'saya' = a hundred (spoken form).",
       "tags": [
         "number"
       ],
@@ -237,9 +237,9 @@
       "id": "distance_200m_001",
       "category": "distances",
       "language": "ne",
-      "text": "दुई सय मिटरपछि राउन्डअबाउट आउँछ।",
-      "tts_text": "Dui saya meterpachhi roundabout auncha.",
-      "expected_pronunciation": "Nepali: 'after 200 meters there is a roundabout'.",
+      "text": "दुई सय मिटरपछि गोलचक्कर आउँछ।",
+      "tts_text": "Dui saya meterpachhi golchakkar auncha.",
+      "expected_pronunciation": "Nepali: 'after 200 meters there is a roundabout'; 'golchakkar' = roundabout.",
       "tags": [
         "number"
       ],
@@ -373,7 +373,7 @@
       "tags": [
         "conversational"
       ],
-      "review_status": "needs-review"
+      "review_status": "approved"
     },
     {
       "id": "speed_camera_003",
@@ -393,11 +393,12 @@
       "id": "redlight_camera_002",
       "category": "enforcement",
       "language": "ne",
-      "text": "अगाडि रातो बत्ती क्यामेरा छ। रोकिनुहोस्।",
-      "tts_text": "Agadi rato batti camera chha. Rokinuhos.",
-      "expected_pronunciation": "Nepali: 'there is a red-light camera ahead, stop'. Loan-compound calque following the स्पिड क्यामेरा pattern — coinage, pending native confirmation.",
+      "text": "अगाडिको रातो बत्तीमा क्यामेरा छ। रोकिनुहोस्।",
+      "tts_text": "Agadiko rato battima camera chha. Rokinuhos.",
+      "expected_pronunciation": "Nepali: 'there is a camera at the red light ahead, stop'. Descriptive wording chosen over the 'रातो बत्ती क्यामेरा' calque.",
       "tags": [],
-      "review_status": "needs-review"
+      "review_status": "approved",
+      "review_note": "Product decision based on the linguistic review (docs/nepali-human-review-v2.md): descriptive wording preferred over the 'रातो बत्ती क्यामेरा' calque. May receive future native-speaker validation."
     },
     {
       "id": "police_001",
@@ -435,7 +436,7 @@
       "tts_text": "Tapai gantavyama aipugnu bhayou.",
       "expected_pronunciation": "Nepali: 'you have arrived at your destination'; आइपुग्नुभयो (arrive here) is warmer/more spoken than पुग्नुभयो.",
       "tags": [],
-      "review_status": "needs-review"
+      "review_status": "approved"
     },
     {
       "id": "arrival_003",
@@ -459,7 +460,7 @@
       "tts_text": "Tapaiko gantavya debratira chha.",
       "expected_pronunciation": "Nepali: 'your destination is on the left'.",
       "tags": [],
-      "review_status": "needs-review"
+      "review_status": "approved"
     },
     {
       "id": "humor_001",
@@ -472,7 +473,7 @@
         "humor",
         "conversational"
       ],
-      "review_status": "needs-review"
+      "review_status": "approved"
     },
     {
       "id": "humor_002",
@@ -508,7 +509,7 @@
         "conversational",
         "long"
       ],
-      "review_status": "needs-review"
+      "review_status": "approved"
     }
   ]
 }
