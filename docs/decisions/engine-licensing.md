@@ -15,20 +15,28 @@ Research date: 2026-08-15.
 
 ## Piper
 
+> **Update (2026-08-15, verified at experiment time):** the current `pip install
+> piper-tts` package (v1.6.1) is **GPL-3.0-or-later** and points to the
+> `OHF-Voice/piper1-gpl` fork. The MIT `rhasspy/piper` repo is archived. The earlier
+> note "the pip package is the MIT version" is **outdated** — see the reversal below.
+
 | Item                | Finding | Source |
 | ------------------- | ------- | ------ |
-| Source code license | **MIT** (rhasspy/piper `LICENSE.md`, © 2022 Michael Hansen) | https://github.com/rhasspy/piper/blob/master/LICENSE.md |
-| Repository status   | **Archived** (read-only since Oct 2025). Dev moved to `OHF-Voice/piper1-gpl` — a **GPL** fork. | https://github.com/rhasspy/piper |
-| Model/weights license | **Per-voice MODEL_CARD.** Piper's README states Piper is intended for TTS research and imposes no additional restrictions on voice models; each voice's licensing lives in its own MODEL_CARD file. Individual voices may carry their own licenses (e.g. dataset-derived restrictions). | https://github.com/Bigbynth/piper-tts (MODEL_CARD note); https://github.com/rhasspy/piper#voices |
-| Voice license        | Same as above — per-voice, must be checked for the specific voice (e.g. `ne_NP-chitwan-medium`). **UNKNOWN — REQUIRES VERIFICATION** per voice. | https://huggingface.co/rhasspy/piper-voices |
-| Dataset restrictions | Voices trained on various datasets (e.g. Common Voice, LJSpeech, MLS); restrictions, if any, follow each voice's MODEL_CARD. **UNKNOWN — REQUIRES VERIFICATION** per voice. | — |
-| Commercial use       | MIT code: permitted. GPL fork: copyleft implications. Voice models: depends on each MODEL_CARD. | — |
-| Attribution          | MIT requires license notice for code. Voice-level attribution per MODEL_CARD. | — |
+| Source code license | **GPL-3.0-or-later** for the maintained package (piper-tts 1.6.1 → `OHF-Voice/piper1-gpl`). Original `rhasspy/piper` is **MIT** but **archived** (Oct 2025). | PyPI `piper-tts` 1.6.1 metadata (License: GPL-3.0-or-later, Home-page: github.com/OHF-voice/piper1-gpl); https://github.com/OHF-Voice/piper1-gpl |
+| Repository status   | `rhasspy/piper` archived (read-only). Active maintenance in `OHF-Voice/piper1-gpl` (GPL-3.0), which is looking for maintainers. | https://github.com/OHF-Voice/piper1-gpl |
+| Model/weights license | Voice models on `huggingface.co/rhasspy/piper-voices` (repo license: **MIT**) — **per-voice** licensing lives in each voice's MODEL_CARD. Piper itself imposes no additional voice restrictions. | https://huggingface.co/rhasspy/piper-voices |
+| Voice license (ne_NP-chitwan-medium) | **Dataset CC0** (from OHF-Voice/voice-datasets). Trained by finetuning U.S. English lessac voice. Model card lists no additional voice-level license beyond CC0 dataset. **Interpretation of CC0 for commercial use is a legal question — not concluded here.** | https://huggingface.co/rhasspy/piper-voices/blob/main/ne/ne_NP/chitwan/medium/MODEL_CARD |
+| Voice license (ne_NP-google-medium) | **Dataset CC-BY-SA-4.0** (OpenSLR 43). 18 speakers, 22,050 Hz. Finetuned from U.S. English lessac. **CC-BY-SA is share-alike — implications for derivative/commercial use require legal review. Not concluded here.** | https://huggingface.co/rhasspy/piper-voices/blob/main/ne/ne_NP/google/medium/MODEL_CARD |
+| Voice license (ne_NP-google-x_low) | **Dataset CC-BY-SA-4.0** (OpenSLR 43). 18 speakers, 16,000 Hz. Trained from scratch. **Share-alike — same review note as google-medium.** | https://huggingface.co/rhasspy/piper-voices/blob/main/ne/ne_NP/google/x_low/MODEL_CARD |
+| Dataset restrictions | chitwan: **CC0** dataset. google-medium / google-x_low: **CC-BY-SA-4.0** dataset (share-alike). | per-voice MODEL_CARDs (above) |
+| Commercial use       | GPL-3.0 code: copyleft obligations for distribution. Voice models: chitwan **CC0** dataset; google voices **CC-BY-SA-4.0** dataset (share-alike). **No legal conclusion.** | — |
+| Attribution          | GPL requires preserving license notices. Voice-level attribution per MODEL_CARD (chitwan: CC0). | — |
 
-**Notes:**
-- The `pip install piper-tts` package (used by this repo's adapter) is the MIT version.
-- If the project later adopts the actively-developed piper1-gpl fork, the GPL license
-  has real implications for a commercial app — decision required.
+**Reversal (2026-08-15):** the claim "the `pip install piper-tts` package is the MIT
+version" is **no longer true** — current PyPI piper-tts 1.6.1 is GPL-3.0-or-later from
+the OHF-Voice fork. This changes the licensing picture for any distributed product that
+embeds/redistributes the Piper code (GPL copyleft). For internal benchmarking use this
+has no immediate practical effect; for product distribution a review is required.
 
 ---
 
@@ -75,7 +83,7 @@ Research date: 2026-08-15.
 
 | Engine      | Code | Weights | Nepali? | Watch items |
 | ----------- | ---- | ------- | ------- | ----------- |
-| Piper       | MIT (archived); GPL fork | per-voice | ✅ official voices | per-voice MODEL_CARDs; archived upstream |
+| Piper       | **GPL-3.0** (maintained); MIT (archived) | per-voice | ✅ official voices | GPL-3.0 code copyleft; chitwan CC0; google voices UNKNOWN |
 | Kokoro      | Apache-2.0 | Apache-2.0 | ❌ | CC BY training data attribution |
 | Qwen3-TTS   | Apache-2.0 | Apache-2.0 | ❌ (10 langs) | Nepali unproven; voice-clone terms UNKNOWN |
 | Chatterbox  | MIT | MIT | ❌ (23 langs, no Nepali) | Perth watermark on output; Hindi finetune exists |

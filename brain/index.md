@@ -1,6 +1,6 @@
 # Brain Index
 
-_Auto-generated. Last updated 2026-08-15T06:19:51.354Z._
+_Auto-generated. Last updated 2026-08-15T06:36:50.674Z._
 
 - [audio-standard](pages/audio-standard.md) — category: decision | # Standardized audio for the benchmark
 - [command-code-role](pages/command-code-role.md) — category: decision | # Command Code's role: implementation agent
@@ -10,7 +10,8 @@ _Auto-generated. Last updated 2026-08-15T06:19:51.354Z._
 - [flutter-deferred](pages/flutter-deferred.md) — category: decision | # Flutter frontend deferred
 - [git-workflow](pages/git-workflow.md) — category: decision | # Git workflow rules
 - [open-questions](pages/open-questions.md) — category: project | # Unresolved technical questions & decisions needing review
-- [piper-nepali-voices](pages/piper-nepali-voices.md) — category: decision | # Research finding: Piper has identifiable Nepali voices
+- [piper-nepali-voices](pages/piper-nepali-voices.md) — category: decision | # Verified: Piper has working Nepali voices
+- [piper-performance-baseline](pages/piper-performance-baseline.md) — category: reference | # Piper M1 CPU performance baseline
 - [python-tts-stack](pages/python-tts-stack.md) — category: decision | # Python is the TTS experimentation environment
 - [tts-benchmark-milestone](pages/tts-benchmark-milestone.md) — category: decision | # Current milestone: TTS research and benchmarking
 - [tts-candidates](pages/tts-candidates.md) — category: concept | # TTS candidate engines

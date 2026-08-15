@@ -11,6 +11,12 @@ benchmark-run
 # Run specific engines
 benchmark-run --engines piper kokoro
 
+# Run Piper with one specific voice (isolated under output/piper/<voice>/)
+benchmark-run --engines piper --piper-voices ne_NP-chitwan-medium
+
+# Run Piper with all official Nepali voices (one run per voice)
+benchmark-run --engines piper --piper-voices all
+
 # Force regeneration (overwrite existing WAVs)
 benchmark-run --force
 """
@@ -18,6 +24,7 @@ benchmark-run --force
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -27,6 +34,13 @@ from benchmark.core.registry import available_engines, create_engine
 from benchmark.core.runner import BenchmarkConfig, BenchmarkRunner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+#: Official Nepali voices in the local models dir (benchmark/engines/piper/models).
+PIPER_NEPALI_VOICES = [
+    "ne_NP-chitwan-medium",
+    "ne_NP-google-medium",
+    "ne_NP-google-x_low",
+]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -59,6 +73,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Target sample rate for generated audio (default 16000).",
     )
     parser.add_argument(
+        "--piper-voices", nargs="*", default=None,
+        help="Piper voices to run (default: adapter default). Use 'all' for every "
+             "official Nepali voice, or pass specific voice names, e.g. "
+             "--piper-voices ne_NP-chitwan-medium ne_NP-google-medium.",
+    )
+    parser.add_argument(
         "--force", action="store_true",
         help="Regenerate audio even if a WAV already exists.",
     )
@@ -88,30 +108,60 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ERROR: unknown engine(s): {unknown}. Registered: {available_engines()}")
         return 2
 
-    config = BenchmarkConfig(
-        engines=engines_to_run,
-        phrases=phrases,
-        output_root=Path(args.output),
-        results_dir=Path(args.results),
-        sample_rate=args.sample_rate,
-        force=args.force,
-    )
-    runner = BenchmarkRunner(config)
+    # Expand --piper-voices into per-voice runs (engine name stays 'piper',
+    # subdir isolates output/results per voice). PIPER_VOICE is set right before
+    # each runner is created so the adapter picks up the correct voice.
+    configs: list[BenchmarkConfig] = []
+    if args.piper_voices:
+        if "piper" not in engines_to_run:
+            print("ERROR: --piper-voices requires --engines piper (or no --engines)")
+            return 2
+        voices = PIPER_NEPALI_VOICES if args.piper_voices == ["all"] else args.piper_voices
+        for voice in voices:
+            configs.append(
+                BenchmarkConfig(
+                    engines=["piper"],
+                    phrases=phrases,
+                    output_root=Path(args.output),
+                    results_dir=Path(args.results),
+                    sample_rate=args.sample_rate,
+                    force=args.force,
+                    subdirs={"piper": voice},
+                )
+            )
+    else:
+        configs.append(
+            BenchmarkConfig(
+                engines=engines_to_run,
+                phrases=phrases,
+                output_root=Path(args.output),
+                results_dir=Path(args.results),
+                sample_rate=args.sample_rate,
+                force=args.force,
+            )
+        )
 
     print(f"Engines to run: {engines_to_run}")
-    by_engine = runner.run_all(phrases)
+    for config in configs:
+        voice = config.subdirs.get("piper")
+        if voice:
+            os.environ["PIPER_VOICE"] = voice
+            print(f"  piper voice: {voice}")
+        runner = BenchmarkRunner(config)
+        by_engine = runner.run_all(phrases)
 
-    for name, results in by_engine.items():
-        if not results:
-            reason_file = runner.results_file_for(name)
-            print(f"[{name}] skipped (see {reason_file})")
-            continue
-        summary = runner.summarize(results)
-        print(
-            f"[{name}] {summary.succeeded}/{summary.total} ok, "
-            f"{summary.failed} failed, "
-            f"avg {summary.avg_duration_seconds}s per phrase"
-        )
+        for name, results in by_engine.items():
+            if not results:
+                reason_file = runner.results_file_for(name)
+                print(f"[{name}] skipped (see {reason_file})")
+                continue
+            summary = runner.summarize(results)
+            label = config.subdirs.get(name, "")
+            print(
+                f"[{name}/{label}] {summary.succeeded}/{summary.total} ok, "
+                f"{summary.failed} failed, "
+                f"avg {summary.avg_duration_seconds}s per phrase"
+            )
     print(f"Results written to {config.results_dir}")
     print(f"Audio written to {config.output_root}")
     return 0

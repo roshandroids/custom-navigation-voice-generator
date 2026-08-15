@@ -180,6 +180,66 @@ engine, model, voice, phrase_id, text (exactly what was synthesized), output_fil
 success, started_at, duration_seconds (wall-clock generation), audio.duration_seconds,
 audio.sample_rate, audio.channels, error_message.
 
+## Human evaluation sheet
+
+Generated audio to review: `benchmark/output/piper/<voice>/<phrase_id>.wav` (one WAV per
+phrase per voice). Listen and score each row manually. Scores are **blank** — fill them
+in during listening evaluation. Suggested scale: 1 (poor) – 5 (excellent). Focus
+especially on Nepali pronunciation, mixed Nepali/English switching, numbers/units, and
+navigation clarity at driving speed. Do not alter the corpus to hide problems — the
+problems are part of the benchmark.
+
+| Voice | Phrase ID | Naturalness | Pronunciation | Navigation Clarity | Notes |
+| ----- | --------- | ----------- | ------------- | ------------------ | ----- |
+| ne_NP-chitwan-medium | turn_left_001 | | | | |
+| ne_NP-chitwan-medium | turn_right_001 | | | | |
+| ne_NP-chitwan-medium | keep_left_002 | | | | |
+| ne_NP-chitwan-medium | continue_straight_002 | | | | |
+| ne_NP-chitwan-medium | uturn_002 | | | | |
+| ne_NP-chitwan-medium | roundabout_002 | | | | |
+| ne_NP-chitwan-medium | exit_002 | | | | |
+| ne_NP-chitwan-medium | distance_100m_002 | | | | |
+| ne_NP-chitwan-medium | distance_500m_002 | | | | |
+| ne_NP-chitwan-medium | distance_1km_002 | | | | |
+| ne_NP-chitwan-medium | distance_200m_001 | | | | |
+| ne_NP-chitwan-medium | distance_300m_001 | | | | |
+| ne_NP-chitwan-medium | traffic_ahead_001 | | | | |
+| ne_NP-chitwan-medium | traffic_heavy_002 | | | | |
+| ne_NP-chitwan-medium | accident_ahead_002 | | | | |
+| ne_NP-chitwan-medium | construction_002 | | | | |
+| ne_NP-chitwan-medium | road_closed_002 | | | | |
+| ne_NP-chitwan-medium | speed_camera_001 | | | | |
+| ne_NP-chitwan-medium | speed_camera_002 | | | | |
+| ne_NP-chitwan-medium | redlight_camera_002 | | | | |
+| ne_NP-chitwan-medium | police_002 | | | | |
+| ne_NP-chitwan-medium | arrival_002 | | | | |
+| ne_NP-chitwan-medium | arrival_005 | | | | |
+| ne_NP-chitwan-medium | humor_001 | | | | |
+| ne_NP-chitwan-medium | humor_002 | | | | |
+| ne_NP-chitwan-medium | long_001 | | | | |
+| ne_NP-google-medium | speed_camera_001 | | | | |
+| ne_NP-google-medium | speed_camera_002 | | | | |
+| ne_NP-google-medium | traffic_ahead_001 | | | | |
+| ne_NP-google-medium | distance_500m_002 | | | | |
+| ne_NP-google-medium | humor_002 | | | | |
+| ne_NP-google-medium | turn_left_001 | | | | |
+| ne_NP-google-medium | roundabout_002 | | | | |
+| ne_NP-google-medium | uturn_002 | | | | |
+| ne_NP-google-medium | long_001 | | | | |
+| ne_NP-google-x_low | speed_camera_001 | | | | |
+| ne_NP-google-x_low | speed_camera_002 | | | | |
+| ne_NP-google-x_low | traffic_ahead_001 | | | | |
+| ne_NP-google-x_low | distance_500m_002 | | | | |
+| ne_NP-google-x_low | humor_002 | | | | |
+| ne_NP-google-x_low | turn_left_001 | | | | |
+| ne_NP-google-x_low | roundabout_002 | | | | |
+| ne_NP-google-x_low | uturn_002 | | | | |
+| ne_NP-google-x_low | long_001 | | | | |
+
+> **Note:** `ne_NP-google-medium` emitted `Missing phoneme from id map: ʰ` warnings on
+> some phrases during generation — flag any audible artifacts for those files during
+> listening.
+
 ## Evaluation dimensions (future work)
 
 - **Naturalness** (human listening)

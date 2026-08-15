@@ -126,7 +126,7 @@ def test_failed_engine_isolated(tmp_path: Path):
 
 def test_run_all_records_unavailable_engines(tmp_path: Path):
     config = BenchmarkConfig(
-        engines=["dummy", "piper"],  # piper not installed on CI
+        engines=["dummy", "chatterbox"],  # chatterbox CLI not installed
         output_root=tmp_path / "output",
         results_dir=tmp_path / "results",
     )
@@ -134,9 +134,9 @@ def test_run_all_records_unavailable_engines(tmp_path: Path):
     by_engine = runner.run_all([PHRASE])
 
     assert "dummy" in by_engine and by_engine["dummy"][0].success is True
-    assert "piper" in by_engine and by_engine["piper"] == []
+    assert "chatterbox" in by_engine and by_engine["chatterbox"] == []
 
-    payload = json.loads(runner.results_file_for("piper").read_text(encoding="utf-8"))
+    payload = json.loads(runner.results_file_for("chatterbox").read_text(encoding="utf-8"))
     assert payload["unavailable"] is True
     assert "reason" in payload
 
