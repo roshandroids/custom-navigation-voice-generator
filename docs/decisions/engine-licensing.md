@@ -45,6 +45,19 @@ the OHF-Voice fork. This changes the licensing picture for any distributed produ
 embeds/redistributes the Piper code (GPL copyleft). For internal benchmarking use this
 has no immediate practical effect; for product distribution a review is required.
 
+### English voices actually tested (standalone English evaluation, 2026-08-15)
+
+Model cards re-fetched and verified 2026-08-15 (all on `huggingface.co/rhasspy/piper-voices`, repo license **MIT**).
+
+| Voice | Piper code/package | Model repo license | Model card | Dataset license | Commercial-use restrictions | Attribution requirements |
+| ----- | ------------------ | ------------------ | ---------- | --------------- | --------------------------- | ------------------------ |
+| `en_US-joe-medium` (BASELINE, male) | piper-tts 1.6.1 **GPL-3.0-or-later** (OHF-Voice fork) | MIT (repo) | 1 speaker, medium, 22,050 Hz, finetuned from U.S. English lessac | **CC0** (OHF-Voice/voice-datasets) | None recorded on model card; GPL applies only to Piper code, not voice weights. CC0 interpretation is a legal question — not concluded. | CC0: none required by the model card; GPL requires preserving code license notices. |
+| `en_US-kristin-medium` (female) | same as above | MIT (repo) | 1 speaker, medium, 22,050 Hz, trained from scratch (~11.5 h LibriVox) | **Public domain** (LibriVox) | None recorded on model card; same GPL/weights separation note. | Public domain: none required by model card; GPL notice for code. |
+| `en_US-ljspeech-medium` (female) | same as above | MIT (repo) | 1 speaker, medium, 22,050 Hz, trained from scratch (LJSpeech) | **Public domain** (LJSpeech) | None recorded on model card; same GPL/weights separation note. | Public domain: none required by model card; GPL notice for code. |
+
+Sources: per-voice MODEL_CARDs linked in the Piper table above. **No legal conclusions
+are drawn here** — verify with the license texts before any commercial distribution.
+
 ---
 
 ## Kokoro
