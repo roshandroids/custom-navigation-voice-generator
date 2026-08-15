@@ -42,14 +42,51 @@ that decision.
 
 ## 4. Benchmark architecture
 
-```
-Benchmark Runner (benchmark.core.runner)
-       │  depends only on the TTSAdapter interface + registry
-       ├── Piper Adapter        (benchmark/engines/piper)      — subprocess
-       ├── Kokoro Adapter       (benchmark/engines/kokoro)     — in-process
-       ├── Qwen3-TTS Adapter    (benchmark/engines/qwen3)      — subprocess
-       └── Chatterbox Adapter   (benchmark/engines/chatterbox) — subprocess
-       └── Dummy Adapter        (benchmark/engines/dummy)      — silence, always runs
+Full system flow:
+
+```mermaid
+flowchart TD
+  subgraph Corpus["Corpus layer"]
+    C1["benchmark/corpus/phrases.json<br/>25 ne + 24 en + 1 ne-en = 50 phrases<br/>(stable IDs, finalized copy)"]
+    C2["corpus-validate CLI<br/>(schema / ID / duplicate checks)"]
+  end
+
+  subgraph Core["Core layer (pure stdlib, zero runtime deps)"]
+    A["TTSAdapter interface<br/>benchmark/core/tts.py"]
+    REG["Engine registry<br/>benchmark/core/registry.py"]
+    RUN["BenchmarkRunner<br/>benchmark/core/runner.py"]
+    AUD["Audio utils<br/>benchmark/core/audio.py"]
+  end
+
+  subgraph Engines["Engine adapters (benchmark/engines/)"]
+    P["piper — subprocess<br/>(official ne_NP voices)"]
+    K["kokoro — in-process<br/>(no Nepali)"]
+    Q["qwen3 — subprocess<br/>(no Nepali)"]
+    CH["chatterbox — subprocess<br/>(no Nepali)"]
+    D["dummy — silence<br/>(always runs)"]
+  end
+
+  subgraph Output["Generated artifacts (gitignored)"]
+    WAV["benchmark/output/&lt;engine&gt;/&lt;voice&gt;/&lt;phrase_id&gt;.wav"]
+    RES["benchmark/results/&lt;engine&gt;[-&lt;voice&gt;].json + .csv"]
+  end
+
+  subgraph Eval["Evaluation (human)"]
+    E1["docs/tts-evaluation-ne.md<br/>75 blank rows (25 ne x 3 voices)"]
+    E2["docs/tts-evaluation-en.md<br/>English voices"]
+  end
+
+  C1 --> C2
+  C1 --> RUN
+  RUN --> A
+  REG --> RUN
+  A --> P & K & Q & CH & D
+  RUN --> WAV
+  RUN --> RES
+  RUN --> AUD
+  AUD --> WAV
+  WAV --> E1
+  WAV --> E2
 ```
 
 Key properties:
@@ -141,7 +178,70 @@ in the metadata.
 Engines that can't run are skipped and recorded as `unavailable` in the results
 directory. The run **never fails** because one engine is missing.
 
-## 10. Where generated WAV files are stored
+## 10. Reproducing the benchmark on another machine
+
+Generated WAVs, the `piper-tts` package, and the voice models are all **gitignored**,
+so a fresh clone has none of them. Everything is regenerable in three steps.
+
+### 10.1 Clone and set up the venv
+
+```bash
+git clone https://github.com/roshandroids/custom-navigation-voice-generator.git
+cd custom-navigation-voice-generator
+python3.12 -m venv .venv
+.venv/bin/pip install -e ".[dev]" piper-tts
+```
+
+> **Note:** `piper-tts` is not declared in `pyproject.toml` — it is installed manually
+> (v1.6.1 on the machine that generated the current benchmark). Add it to the `dev`
+> optional-dependencies to make setup reproducible.
+
+### 10.2 Get the voice models (~167 MB total, not in git)
+
+The Piper adapter looks up models by exact filename in
+`benchmark/engines/piper/models/` (each voice needs `<voice>.onnx` + `<voice>.onnx.json`).
+
+**Option A — copy from the machine that already has them:**
+
+```bash
+rsync -av benchmark/engines/piper/models/ \
+  user@newhost:/path/to/project/benchmark/engines/piper/models/
+```
+
+**Option B — download from Hugging Face** (`rhasspy/piper-voices`): fetch the three
+official Nepali voices and place both files per voice in
+`benchmark/engines/piper/models/`:
+
+- `ne_NP-chitwan-medium.onnx` + `.onnx.json`
+- `ne_NP-google-medium.onnx` + `.onnx.json`
+- `ne_NP-google-x_low.onnx` + `.onnx.json`
+
+### 10.3 Generate
+
+```bash
+# Full 50-phrase corpus x 3 Nepali voices
+.venv/bin/benchmark-run --engines piper --piper-voices all --force
+
+# Verify setup
+.venv/bin/corpus-validate && .venv/bin/benchmark-run --list
+```
+
+WAVs land in `benchmark/output/piper/<voice>/`, metadata in
+`benchmark/results/`. The corpus text and benchmark engine are committed, and Piper
+output is deterministic for a given model + text — so the same piper version produces
+the same WAVs on any machine. RTF (generation speed) varies by CPU, but audio output
+matches.
+
+**Caveats:**
+
+- The previous benchmark ran on Apple M1 CPU; any platform works with the same ONNX
+  models, but generation time will differ.
+- The `ne_NP-*` voice models have per-voice MODEL_CARD licensing — see
+  `docs/decisions/engine-licensing.md` before distributing models beyond your own
+  machines.
+- Never commit models or WAVs — both are gitignored by design.
+
+## 11. Where generated WAV files are stored
 
 ```
 benchmark/output/
@@ -153,7 +253,7 @@ benchmark/output/
 One directory per engine, one WAV per phrase (`<phrase_id>.wav`). Audio is
 **gitignored** — never commit generated audio.
 
-## 11. Where benchmark metadata is stored
+## 12. Where benchmark metadata is stored
 
 ```
 benchmark/results/
@@ -167,7 +267,13 @@ success/failure, error message. See `benchmark/results/README.md` for the JSON
 shape. Human evaluation scores (naturalness, pronunciation, navigation clarity)
 will be added to this format in a later milestone.
 
-## 12. How to add a new TTS engine
+**Current evaluation state:** the finalized 25-phrase Nepali corpus has been
+synthesized with the three Piper voices (75 WAVs, generated 2026-08-15). Human
+scores are **pending** — see `docs/tts-evaluation-ne.md` (blank 1–5 table, priority
+listening flags) and `docs/tts-evaluation-en.md` for the English voices. No voice is
+selected automatically; selection requires human listening.
+
+## 13. How to add a new TTS engine
 
 1. Create `benchmark/engines/<name>/` with an `adapter.py` implementing
    `benchmark.core.tts.TTSAdapter` and a matching `__init__.py`.
@@ -181,7 +287,7 @@ will be added to this format in a later milestone.
 
 See `benchmark/engines/dummy/adapter.py` — the minimal reference adapter.
 
-## 13. How to add a new phrase
+## 14. How to add a new phrase
 
 ```bash
 .venv/bin/corpus-add-phrase \
@@ -198,7 +304,7 @@ or edit `benchmark/corpus/phrases.json` directly, then:
 IDs are stable by contract: keep existing IDs, add new ones for new phrases
 (renaming orphans previously generated audio and results).
 
-## 14. Known limitations
+## 15. Known limitations
 
 - **Nepali *quality* is unproven for every engine, including Piper.** Piper has
   official Nepali voices; the others don't (Kokoro/Chatterbox) or don't list Nepali
@@ -230,9 +336,14 @@ IDs are stable by contract: keep existing IDs, add new ones for new phrases
 │   ├── results/            (JSON/CSV metadata — gitignored)
 │   └── scripts/            (run_benchmark, validate_corpus)
 ├── docs/
-│   ├── tts-evaluation.md
-│   ├── architecture.md
-│   └── decisions/engine-licensing.md
+│   ├── tts-evaluation.md          (engine setup + evaluation guide)
+│   ├── tts-evaluation-ne.md       (Nepali MVP — 75 blank rows, human scores)
+│   ├── tts-evaluation-en.md       (English voice evaluation)
+│   ├── nepali-human-review-v2.md  (final Nepali linguistic review)
+│   ├── decisions/
+│   │   ├── engine-licensing.md
+│   │   └── nepali-content-final.md
+│   └── architecture.md
 ├── tests/
 └── tools/add_phrase.py
 ```

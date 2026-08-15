@@ -9,6 +9,11 @@ How to install and run each candidate engine, and what the results mean.
   16 kHz mono format): `brew install ffmpeg`
 - Project venv: `python3.12 -m venv .venv && .venv/bin/pip install -e ".[dev]"`
 
+> **Reproducing on a fresh machine?** WAVs, the `piper-tts` package, and the voice
+> models are gitignored. Follow README §10 (clone → install `piper-tts` → copy or
+> download the `ne_NP-*` models into `benchmark/engines/piper/models/` → run with
+> `--force`).
+
 ## Engine matrix (as of 2026-08-15)
 
 | Engine      | Code license | Weights license        | Nepali voices?                    | Extra env needed |
