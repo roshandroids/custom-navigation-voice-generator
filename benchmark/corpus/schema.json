@@ -21,7 +21,7 @@
         "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
         "category": {
           "type": "string",
-          "enum": ["directions", "distances", "traffic", "enforcement", "arrival", "language_tests"]
+          "enum": ["directions", "distances", "traffic", "enforcement", "arrival", "language_tests", "start_of_drive", "other"]
         },
         "language": { "type": "string", "enum": ["ne", "en", "ne-en"] },
         "text": { "type": "string", "minLength": 1 },

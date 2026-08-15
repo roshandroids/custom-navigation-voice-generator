@@ -304,7 +304,30 @@ or edit `benchmark/corpus/phrases.json` directly, then:
 IDs are stable by contract: keep existing IDs, add new ones for new phrases
 (renaming orphans previously generated audio and results).
 
-## 15. Known limitations
+## 15. Waze voice-pack generation
+
+`benchmark/corpus/waze_voicepack.json` is a separate, dedicated corpus: the exact
+43-phrase "Record your own voice" script from Waze's Nepali voice-recording screen
+(Start of drive, Distances, Instructions, Reports, Other), each with natural
+spoken-Nepali text reviewed in `docs/nepali-waze-voicepack-review.md`. It uses two
+extra categories (`start_of_drive`, `other`) not present in the main corpus.
+
+Unlike `benchmark-run`, which sends every phrase in a corpus through whichever voice
+is selected regardless of the phrase's own language, `waze-voicepack-run` always
+routes each phrase to a voice that can actually speak its language — English phrases
+to the `en_US-*` voices, Nepali phrases to the `ne_NP-*` voices:
+
+```bash
+.venv/bin/waze-voicepack-run            # all 3 Nepali + all 3 English voices
+.venv/bin/waze-voicepack-run --force    # regenerate even if WAVs already exist
+.venv/bin/waze-voicepack-run --ne-voices ne_NP-google-medium --en-voices en_US-ljspeech-medium
+```
+
+Output: `benchmark/output/waze/piper/<voice>/<phrase_id>.wav`, metadata in
+`benchmark/results/waze/`. Same gitignore rules as the main benchmark — never commit
+generated audio.
+
+## 16. Known limitations
 
 - **Nepali *quality* is unproven for every engine, including Piper.** Piper has
   official Nepali voices; the others don't (Kokoro/Chatterbox) or don't list Nepali

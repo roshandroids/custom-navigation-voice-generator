@@ -29,6 +29,7 @@ dev = [
 benchmark-run = "benchmark.scripts.run_benchmark:main"
 corpus-validate = "benchmark.scripts.validate_corpus:main"
 corpus-add-phrase = "tools.add_phrase:main"
+waze-voicepack-run = "benchmark.scripts.run_waze_voicepack:main"
 
 [tool.setuptools]
 packages = [
