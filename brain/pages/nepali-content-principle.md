@@ -5,7 +5,7 @@ category: decision
 status: active
 tags: [corpus, content, nepali]
 created: "2026-08-15T12:23:46"
-updated: "2026-08-15T12:25:56"
+updated: "2026-08-15T12:31:50"
 ---
 
 <!-- compiled_truth -->
@@ -55,3 +55,9 @@ Related: [[voice-pack-single-language]], [[corpus-standard]], [[hybrid-tts-exper
   summary: Rewrote compiled_truth to the new best understanding
   source: brain update-truth
   affects: [nepali-content-principle]
+
+- time: 2026-08-15T12:31:50
+  kind: decision
+  summary: "Native-conversational review (2026-08-15): 26 phrases reviewed, 17 approved (standard spoken constructions), 9 flagged needs-review (निकास/exit vocabulary, रातो बत्ती क्यामेरा calque, arrival register, personality/long-form). Review record: docs/nepali-content-review.md. Not native-human approval."
+  source: Nepali content review pass 2026-08-15
+  affects: [corpus-standard]

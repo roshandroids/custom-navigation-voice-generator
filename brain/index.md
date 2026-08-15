@@ -1,6 +1,6 @@
 # Brain Index
 
-_Auto-generated. Last updated 2026-08-15T16:26:08.988Z._
+_Auto-generated. Last updated 2026-08-15T16:31:50.540Z._
 
 - [audio-standard](pages/audio-standard.md) — category: decision | # Standardized audio for the benchmark
 - [command-code-role](pages/command-code-role.md) — category: decision | # Command Code's role: implementation agent
