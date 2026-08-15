@@ -277,6 +277,104 @@ sounds like a coherent navigation voice or a jarring alternation.
 
 ---
 
+## English voice evaluation (2026-08-15)
+
+**Context:** voice packs are single-language ([[voice-pack-single-language]] in BRAIN).
+English is evaluated INDEPENDENTLY with English voices only — no mixed-language
+stitching. Three permissive-licensed English voices were benchmarked against the
+47-phrase English corpus (`benchmark/corpus/phrases_en.json`).
+
+**Baseline:** `en_US-joe-medium` (male, CC0). **Candidates:** `en_US-kristin-medium`
+(female, public domain), `en_US-ljspeech-medium` (female, public domain).
+
+**Audio to review:** `benchmark/output/piper/<voice>/<phrase_id>.wav` (47 per voice).
+
+Scores are **blank** — fill in during listening (1 = poor, 5 = excellent). Focus on
+English pronunciation, naturalness, clarity, navigation suitability, numbers,
+speed/distance expressions, sentence endings, and personality fit.
+
+### Directions & distances
+
+| Voice | Phrase ID | Pronunciation | Naturalness | Clarity | Nav Suitability | Notes |
+| ----- | --------- | ------------- | ----------- | ------- | --------------- | ----- |
+| en_US-joe-medium | en_turn_left_001 | | | | | |
+| en_US-joe-medium | en_turn_right_001 | | | | | |
+| en_US-joe-medium | en_keep_left_001 | | | | | |
+| en_US-joe-medium | en_keep_right_001 | | | | | |
+| en_US-joe-medium | en_continue_straight_001 | | | | | |
+| en_US-joe-medium | en_uturn_001 | | | | | |
+| en_US-joe-medium | en_roundabout_001 | | | | | |
+| en_US-joe-medium | en_roundabout_003 | | | | | |
+| en_US-joe-medium | en_exit_001 | | | | | |
+| en_US-joe-medium | en_exit_003 | | | | | |
+| en_US-joe-medium | en_distance_100m_001 | | | | | |
+| en_US-joe-medium | en_distance_500m_001 | | | | | |
+| en_US-joe-medium | en_distance_1km_001 | | | | | |
+| en_US-joe-medium | en_distance_intersection_001 | | | | | |
+| en_US-kristin-medium | en_turn_left_001 | | | | | |
+| en_US-kristin-medium | en_turn_right_001 | | | | | |
+| en_US-kristin-medium | en_uturn_001 | | | | | |
+| en_US-kristin-medium | en_roundabout_002 | | | | | |
+| en_US-kristin-medium | en_exit_002 | | | | | |
+| en_US-kristin-medium | en_distance_500m_001 | | | | | |
+| en_US-kristin-medium | en_distance_1km_001 | | | | | |
+| en_US-ljspeech-medium | en_turn_left_001 | | | | | |
+| en_US-ljspeech-medium | en_turn_right_001 | | | | | |
+| en_US-ljspeech-medium | en_uturn_001 | | | | | |
+| en_US-ljspeech-medium | en_roundabout_001 | | | | | |
+| en_US-ljspeech-medium | en_distance_500m_001 | | | | | |
+| en_US-ljspeech-medium | en_distance_1km_001 | | | | | |
+
+### Traffic & enforcement
+
+| Voice | Phrase ID | Pronunciation | Naturalness | Clarity | Nav Suitability | Notes |
+| ----- | --------- | ------------- | ----------- | ------- | --------------- | ----- |
+| en_US-joe-medium | en_traffic_ahead_001 | | | | | |
+| en_US-joe-medium | en_traffic_heavy_002 | | | | | |
+| en_US-joe-medium | en_accident_ahead_001 | | | | | |
+| en_US-joe-medium | en_hazard_ahead_001 | | | | | |
+| en_US-joe-medium | en_construction_001 | | | | | |
+| en_US-joe-medium | en_road_closed_001 | | | | | |
+| en_US-joe-medium | en_speed_camera_001 | | | | | |
+| en_US-joe-medium | en_redlight_camera_001 | | | | | |
+| en_US-joe-medium | en_police_001 | | | | | |
+| en_US-kristin-medium | en_traffic_heavy_001 | | | | | |
+| en_US-kristin-medium | en_speed_camera_001 | | | | | |
+| en_US-kristin-medium | en_redlight_camera_002 | | | | | |
+| en_US-kristin-medium | en_police_002 | | | | | |
+| en_US-ljspeech-medium | en_traffic_ahead_001 | | | | | |
+| en_US-ljspeech-medium | en_speed_camera_001 | | | | | |
+| en_US-ljspeech-medium | en_redlight_camera_001 | | | | | |
+| en_US-ljspeech-medium | en_police_001 | | | | | |
+
+### Arrival & personality
+
+| Voice | Phrase ID | Pronunciation | Naturalness | Clarity | Nav Suitability | Notes |
+| ----- | --------- | ------------- | ----------- | ------- | --------------- | ----- |
+| en_US-joe-medium | en_arrival_001 | | | | | |
+| en_US-joe-medium | en_arrival_002 | | | | | |
+| en_US-joe-medium | en_arrival_003 | | | | | |
+| en_US-joe-medium | en_personality_simple_001 | | | | | |
+| en_US-joe-medium | en_personality_normal_001 | | | | | |
+| en_US-joe-medium | en_personality_firm_001 | | | | | |
+| en_US-joe-medium | en_personality_savage_001 | | | | | |
+| en_US-joe-medium | en_personality_savage_002 | | | | | |
+| en_US-joe-medium | en_speed_camera_002 (normal) | | | | | |
+| en_US-joe-medium | en_speed_camera_003 (firm) | | | | | |
+| en_US-joe-medium | en_speed_camera_004 (savage) | | | | | |
+| en_US-kristin-medium | en_arrival_001 | | | | | |
+| en_US-kristin-medium | en_arrival_004 | | | | | |
+| en_US-kristin-medium | en_speed_camera_004 (savage) | | | | | |
+| en_US-ljspeech-medium | en_arrival_001 | | | | | |
+| en_US-ljspeech-medium | en_arrival_002 | | | | | |
+| en_US-ljspeech-medium | en_speed_camera_004 (savage) | | | | | |
+
+**Personality reference (all three voices, `en_speed_camera_00{1,2,3,4}`):**
+simple → normal → firm → savage progression. Evaluate whether the voice carries the
+intended personality without sounding forced.
+
+---
+
 ## Evaluation dimensions (future work)
 
 - **Naturalness** (human listening)

@@ -8,7 +8,9 @@ makes engine comparisons meaningful.
 
 | File          | Purpose                                                                 |
 | ------------- | ----------------------------------------------------------------------- |
-| `phrases.json`| The corpus itself — an array of phrase entries with stable IDs.          |
+| `phrases.json`| The main 50-phrase corpus (Nepali/English/mixed).                        |
+| `phrases_en.json` | English-only 47-phrase corpus — natural English phrasing, same categories, plus personality-style phrases. Used for standalone English voice evaluation (voice packs are single-language). |
+| `hybrid_phrases.json` | **Experimental** — explicit-segment mixed Nepali/English phrases from the hybrid experiment. Historical evidence only; NOT part of the MVP (voice packs are single-language). |
 | `schema.json` | (referenced by `$schema`) The JSON schema the corpus validates against. |
 
 ## Corpus schema

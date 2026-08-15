@@ -1,10 +1,19 @@
 # Hybrid Nepali + English TTS Experiment
 
 **Date:** 2026-08-15
-**Status:** experiment — results pending human listening evaluation
-**Scope:** test whether stitching a Nepali Piper voice (Nepali segments) with an
-English Piper voice (English segments) yields acceptable mixed-language navigation
-speech. This is an experiment only — no final architecture decision.
+**Status: EXPERIMENTAL — NOT part of MVP, NOT part of current architecture.**
+Kept as historical evidence only.
+
+> **Product requirement (clarified 2026-08-15):** voice packs are single-language.
+> The product does NOT need mixed-language speech within a single instruction, and the
+> TTS engine must NOT be asked to pronounce English words using a Nepali voice. There
+> is no requirement to stitch Nepali and English voices together. This experiment
+> documents the research that led to that clarification; it is **not** a product
+> direction. See `voice-pack-single-language` in BRAIN.
+
+**Scope (historical):** test whether stitching a Nepali Piper voice (Nepali segments)
+with an English Piper voice (English segments) yields acceptable mixed-language
+navigation speech.
 
 ## Motivation
 

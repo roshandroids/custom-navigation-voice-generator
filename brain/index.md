@@ -1,6 +1,6 @@
 # Brain Index
 
-_Auto-generated. Last updated 2026-08-15T06:59:28.900Z._
+_Auto-generated. Last updated 2026-08-15T07:15:42.830Z._
 
 - [audio-standard](pages/audio-standard.md) — category: decision | # Standardized audio for the benchmark
 - [command-code-role](pages/command-code-role.md) — category: decision | # Command Code's role: implementation agent
@@ -16,4 +16,5 @@ _Auto-generated. Last updated 2026-08-15T06:59:28.900Z._
 - [python-tts-stack](pages/python-tts-stack.md) — category: decision | # Python is the TTS experimentation environment
 - [tts-benchmark-milestone](pages/tts-benchmark-milestone.md) — category: decision | # Current milestone: TTS research and benchmarking
 - [tts-candidates](pages/tts-candidates.md) — category: concept | # TTS candidate engines
+- [voice-pack-single-language](pages/voice-pack-single-language.md) — category: decision | # Voice packs are single-language
 - [waze-integration-deferred](pages/waze-integration-deferred.md) — category: decision | # Waze integration deferred
