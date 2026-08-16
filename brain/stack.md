@@ -2,7 +2,7 @@
 slug: stack
 title: Tech stack
 role: tech-stack choices
-updated: "2026-08-15T02:12:11"
+updated: "2026-08-15T23:24:37"
 ---
 
 # Tech stack
@@ -18,7 +18,9 @@ updated: "2026-08-15T02:12:11"
 | Linting/format | — | **ruff** | Single fast tool for lint + format. |
 | TTS engines | Piper, Kokoro, Qwen3-TTS, Chatterbox | **All four scaffolded; none selected yet** | The benchmark's job is to decide; an engine may be marked unavailable without breaking runs. |
 | Audio | — | **WAV, 16 kHz mono PCM target** | Standardized for fair comparison; ffmpeg optional for resampling engine-native output. |
-| Frontend (future) | — | **Flutter (intended)** | Deferred until TTS evaluation. Not built now. |
+| Frontend | — | **Flutter (frontend/)** | Frontend MVP built: feature-first Clean Architecture + Riverpod + go_router; TTS behind `TtsRepository` (mock now, FastAPI/Piper later). |
+| Frontend state/DI | — | **Riverpod** | Notifiers + immutable state; no service locator; domain stays pure Dart. |
+| Frontend routing | — | **go_router** | Routes defined in the app layer. |
 | Backend (future) | — | **Python/FastAPI TTS service (possible)** | Not built now; no production backend yet. |
 
 ## Decision mindmap
@@ -35,6 +37,10 @@ graph LR
   C3 --> P2
   C4 --> P2
   C5 --> P2
+  F[Flutter frontend] --> FR[Riverpod + go_router]
+  F --> TTSB[TtsRepository]
+  TTSB --> M[MockTtsRepository now]
+  TTSB --> H[HttpTtsRepository -> FastAPI -> Piper later]
 ```
 
 ## Open items
@@ -42,4 +48,4 @@ graph LR
 - **Which TTS engine wins for Nepali** — the benchmark's core question; no decision yet.
 - **Piper voice selection** (`ne_NP-chitwan` vs `ne_NP-google`) — to be tested.
 - Engine-specific CLI flags for Qwen3-TTS and Chatterbox — unverified at scaffold time.
-- Flutter/FastAPI remain future, provisional choices.
+- Backend TTS service (FastAPI) remains future; frontend integration point is `TtsRepository`.
