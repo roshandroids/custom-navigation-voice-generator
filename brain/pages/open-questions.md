@@ -4,7 +4,7 @@ title: "Unresolved technical questions & review-needed decisions"
 category: project
 status: active
 created: "2026-08-15T02:19:06"
-updated: "2026-08-15T02:19:06"
+updated: "2026-08-15T11:23:44"
 ---
 
 <!-- compiled_truth -->
@@ -12,15 +12,15 @@ updated: "2026-08-15T02:19:06"
 
 Durable open questions (review before proceeding on related work):
 
-1. **Which TTS engine wins for Nepali navigation speech?** — the benchmark's core question; undecided. Piper is the first candidate to test ([[piper-nepali-voices]]).
-2. **Piper voice selection** — `ne_NP-chitwan-medium` vs `ne_NP-google-x_low`/`medium`; needs real-audio comparison.
-3. **Piper upstream status** — `rhasspy/piper` archived (MIT); active dev in `OHF-Voice/piper1-gpl` (GPL). Which do we build on for a commercial app?
-4. **Chatterbox watermarking** — every generated file carries Perth watermark; product/legal implications for voice-pack export.
+1. **Which TTS engine wins for Nepali navigation speech?** — the benchmark's core question; undecided. Piper is verified working (Nepali + English voices) and is the baseline; quality is pending human listening evaluation.
+2. **Can Piper independently provide a good standalone Nepali voice AND a good standalone English voice?** — the current evaluation question (single-language voice packs, [[voice-pack-single-language]]). Nepali voices verified ([[piper-nepali-voices]]); English voices joe/kristin/ljspeech generated 47/47 with permissive licensing ([[piper-english-benchmark]]) — human listening pending.
+3. **English voice selection** — `en_US-joe-medium` (CC0) baseline; `en_US-kristin-medium` / `en_US-ljspeech-medium` (public domain) candidates. Generation and licensing favor all three; **human evaluation pending** — no voice selected until the user reviews the audio.
+4. **Piper upstream status / license** — maintained package is GPL-3.0 (OHF-Voice fork); MIT rhasspy/piper archived. GPL implications for distributed products need review.
 5. **Kokoro CC BY training data** — possible attribution obligations for derivative redistribution.
 6. **Qwen3-TTS and Chatterbox CLI flags** — unverified at scaffold time; need real installs to confirm adapter commands.
-7. **Nepali quality for all engines** — no claims made until actual evaluation ([[engine-selection-pending]]).
+7. **Hybrid stitching** — NO LONGER a product question (single-language voice packs); the experiment is historical evidence only.
 
-Related: [[tts-candidates]], [[engine-licensing]].
+Related: [[tts-candidates]], [[engine-licensing]], [[voice-pack-single-language]], [[piper-english-benchmark]].
 
 
 ## Timeline
@@ -35,4 +35,22 @@ Related: [[tts-candidates]], [[engine-licensing]].
   kind: decision
   summary: captured unresolved items
   source: "initial setup + research"
+  affects: [open-questions]
+
+- time: 2026-08-15T02:36:45
+  kind: decision
+  summary: Piper experiment resolved several open questions
+  source: piper experiment 2026-08-15
+  affects: [open-questions]
+
+- time: 2026-08-15T03:15:36
+  kind: decision
+  summary: "English evaluation in progress; hybrid no longer a product question"
+  source: product requirement clarification 2026-08-15
+  affects: [open-questions]
+
+- time: 2026-08-15T11:23:44
+  kind: decision
+  summary: Rewrote compiled_truth to the new best understanding
+  source: brain update-truth
   affects: [open-questions]

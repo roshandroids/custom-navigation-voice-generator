@@ -1,0 +1,340 @@
+{
+  "$schema": "./schema.json",
+  "version": 1,
+  "description": "English-only navigation phrase corpus for TTS engine benchmarking. Mirrors the categories of the main 50-phrase corpus with natural English phrasing (not literal translations of the Nepali corpus). Includes personality-style phrases (simple / normal / firm / savage) corresponding to intended voice-pack personalities. Every phrase is synthesized with an English TTS voice only — no mixed-language generation.",
+  "metadata_notes": {
+    "personality": "Optional tag indicating intended voice-pack personality: simple, normal, firm, or savage.",
+    "language": "Always 'en' — English voice packs are single-language."
+  },
+  "phrases": [
+    {
+      "id": "en_turn_left_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Turn left.",
+      "tags": ["basic", "short"]
+    },
+    {
+      "id": "en_turn_right_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Turn right.",
+      "tags": ["basic", "short"]
+    },
+    {
+      "id": "en_keep_left_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Keep left.",
+      "tags": ["basic", "short"]
+    },
+    {
+      "id": "en_keep_right_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Keep right.",
+      "tags": ["basic", "short"]
+    },
+    {
+      "id": "en_continue_straight_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Continue straight.",
+      "tags": ["basic"]
+    },
+    {
+      "id": "en_uturn_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Make a U-turn.",
+      "tags": ["basic"]
+    },
+    {
+      "id": "en_uturn_002",
+      "category": "directions",
+      "language": "en",
+      "text": "Make a U-turn when possible.",
+      "tags": []
+    },
+    {
+      "id": "en_roundabout_001",
+      "category": "directions",
+      "language": "en",
+      "text": "At the roundabout, take the first exit.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_roundabout_002",
+      "category": "directions",
+      "language": "en",
+      "text": "At the roundabout, take the second exit.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_roundabout_003",
+      "category": "directions",
+      "language": "en",
+      "text": "At the roundabout, take the third exit.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_exit_001",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the next exit.",
+      "tags": ["basic"]
+    },
+    {
+      "id": "en_exit_002",
+      "category": "directions",
+      "language": "en",
+      "text": "Exit right, then merge onto the highway.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_exit_003",
+      "category": "directions",
+      "language": "en",
+      "text": "Take exit forty-two toward the city center.",
+      "tags": ["number"]
+    },
+    {
+      "id": "en_distance_100m_001",
+      "category": "distances",
+      "language": "en",
+      "text": "In one hundred meters, turn left.",
+      "tags": ["number"]
+    },
+    {
+      "id": "en_distance_500m_001",
+      "category": "distances",
+      "language": "en",
+      "text": "In five hundred meters, keep right.",
+      "tags": ["number"]
+    },
+    {
+      "id": "en_distance_1km_001",
+      "category": "distances",
+      "language": "en",
+      "text": "In one kilometer, take the next exit.",
+      "tags": ["number"]
+    },
+    {
+      "id": "en_distance_2km_001",
+      "category": "distances",
+      "language": "en",
+      "text": "In two kilometers, continue straight.",
+      "tags": ["number"]
+    },
+    {
+      "id": "en_distance_intersection_001",
+      "category": "distances",
+      "language": "en",
+      "text": "At the next intersection, turn right.",
+      "tags": []
+    },
+    {
+      "id": "en_distance_short_001",
+      "category": "distances",
+      "language": "en",
+      "text": "Turn left in fifty meters.",
+      "tags": ["number", "short"]
+    },
+    {
+      "id": "en_traffic_ahead_001",
+      "category": "traffic",
+      "language": "en",
+      "text": "Traffic ahead.",
+      "tags": ["short"]
+    },
+    {
+      "id": "en_traffic_heavy_001",
+      "category": "traffic",
+      "language": "en",
+      "text": "Heavy traffic on your route.",
+      "tags": []
+    },
+    {
+      "id": "en_traffic_heavy_002",
+      "category": "traffic",
+      "language": "en",
+      "text": "There is heavy traffic on your route. Expect delays.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_accident_ahead_001",
+      "category": "traffic",
+      "language": "en",
+      "text": "Accident ahead, expect delays.",
+      "tags": []
+    },
+    {
+      "id": "en_hazard_ahead_001",
+      "category": "traffic",
+      "language": "en",
+      "text": "Hazard ahead, slow down.",
+      "tags": []
+    },
+    {
+      "id": "en_construction_001",
+      "category": "traffic",
+      "language": "en",
+      "text": "Road construction ahead.",
+      "tags": []
+    },
+    {
+      "id": "en_road_closed_001",
+      "category": "traffic",
+      "language": "en",
+      "text": "Road closed, find another route.",
+      "tags": []
+    },
+    {
+      "id": "en_speed_camera_001",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Speed camera ahead.",
+      "tags": ["short", "personality:simple"]
+    },
+    {
+      "id": "en_speed_camera_002",
+      "category": "enforcement",
+      "language": "en",
+      "text": "There's a speed camera ahead. Slow down a little.",
+      "tags": ["personality:normal", "medium"]
+    },
+    {
+      "id": "en_speed_camera_003",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Speed camera ahead. Slow down.",
+      "tags": ["personality:firm", "short"]
+    },
+    {
+      "id": "en_speed_camera_004",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Speed camera ahead. Don't try to be a hero.",
+      "tags": ["personality:savage", "humor"]
+    },
+    {
+      "id": "en_redlight_camera_001",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Red-light camera ahead.",
+      "tags": []
+    },
+    {
+      "id": "en_redlight_camera_002",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Red-light camera ahead. Stop at the light.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_police_001",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Police ahead.",
+      "tags": ["short"]
+    },
+    {
+      "id": "en_police_002",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Police ahead. Keep to the speed limit.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_arrival_001",
+      "category": "arrival",
+      "language": "en",
+      "text": "You have arrived.",
+      "tags": ["short"]
+    },
+    {
+      "id": "en_arrival_002",
+      "category": "arrival",
+      "language": "en",
+      "text": "Your destination is on the left.",
+      "tags": []
+    },
+    {
+      "id": "en_arrival_003",
+      "category": "arrival",
+      "language": "en",
+      "text": "Your destination is on the right.",
+      "tags": []
+    },
+    {
+      "id": "en_arrival_004",
+      "category": "arrival",
+      "language": "en",
+      "text": "You have arrived at your destination.",
+      "tags": ["medium"]
+    },
+    {
+      "id": "en_personality_simple_001",
+      "category": "language_tests",
+      "language": "en",
+      "text": "Turn left.",
+      "tags": ["personality:simple", "short"]
+    },
+    {
+      "id": "en_personality_normal_001",
+      "category": "language_tests",
+      "language": "en",
+      "text": "Please turn left at the next street.",
+      "tags": ["personality:normal", "medium"]
+    },
+    {
+      "id": "en_personality_normal_002",
+      "category": "language_tests",
+      "language": "en",
+      "text": "There's a roundabout ahead. Take the second exit.",
+      "tags": ["personality:normal", "medium"]
+    },
+    {
+      "id": "en_personality_firm_001",
+      "category": "language_tests",
+      "language": "en",
+      "text": "Slow down. Speed camera ahead.",
+      "tags": ["personality:firm", "short"]
+    },
+    {
+      "id": "en_personality_firm_002",
+      "category": "language_tests",
+      "language": "en",
+      "text": "Stop. Red-light camera ahead.",
+      "tags": ["personality:firm", "short"]
+    },
+    {
+      "id": "en_personality_savage_001",
+      "category": "language_tests",
+      "language": "en",
+      "text": "You missed the turn. Again. Let's fix that.",
+      "tags": ["personality:savage", "humor", "conversational"]
+    },
+    {
+      "id": "en_personality_savage_002",
+      "category": "language_tests",
+      "language": "en",
+      "text": "Heavy traffic ahead. Hope you brought snacks.",
+      "tags": ["personality:savage", "humor", "conversational"]
+    },
+    {
+      "id": "en_long_001",
+      "category": "language_tests",
+      "language": "en",
+      "text": "After the bridge, turn left, then continue straight for one kilometer, and take the third exit at the roundabout.",
+      "tags": ["conversational", "long", "number"]
+    },
+    {
+      "id": "en_long_002",
+      "category": "language_tests",
+      "language": "en",
+      "text": "Your destination is ahead on the left. Keep right, then turn left at the next light.",
+      "tags": ["conversational", "long"]
+    }
+  ]
+}

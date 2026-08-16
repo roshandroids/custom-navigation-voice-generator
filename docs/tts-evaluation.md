@@ -9,6 +9,11 @@ How to install and run each candidate engine, and what the results mean.
   16 kHz mono format): `brew install ffmpeg`
 - Project venv: `python3.12 -m venv .venv && .venv/bin/pip install -e ".[dev]"`
 
+> **Reproducing on a fresh machine?** WAVs, the `piper-tts` package, and the voice
+> models are gitignored. Follow README §10 (clone → install `piper-tts` → copy or
+> download the `ne_NP-*` models into `benchmark/engines/piper/models/` → run with
+> `--force`).
+
 ## Engine matrix (as of 2026-08-15)
 
 | Engine      | Code license | Weights license        | Nepali voices?                    | Extra env needed |
@@ -179,6 +184,201 @@ Outputs:
 engine, model, voice, phrase_id, text (exactly what was synthesized), output_file,
 success, started_at, duration_seconds (wall-clock generation), audio.duration_seconds,
 audio.sample_rate, audio.channels, error_message.
+
+## Human evaluation sheet
+
+Generated audio to review: `benchmark/output/piper/<voice>/<phrase_id>.wav` (one WAV per
+phrase per voice). Listen and score each row manually. Scores are **blank** — fill them
+in during listening evaluation. Suggested scale: 1 (poor) – 5 (excellent). Focus
+especially on Nepali pronunciation, mixed Nepali/English switching, numbers/units, and
+navigation clarity at driving speed. Do not alter the corpus to hide problems — the
+problems are part of the benchmark.
+
+| Voice | Phrase ID | Naturalness | Pronunciation | Navigation Clarity | Notes |
+| ----- | --------- | ----------- | ------------- | ------------------ | ----- |
+| ne_NP-chitwan-medium | turn_left_001 | | | | |
+| ne_NP-chitwan-medium | turn_right_001 | | | | |
+| ne_NP-chitwan-medium | keep_left_002 | | | | |
+| ne_NP-chitwan-medium | continue_straight_002 | | | | |
+| ne_NP-chitwan-medium | uturn_002 | | | | |
+| ne_NP-chitwan-medium | roundabout_002 | | | | |
+| ne_NP-chitwan-medium | exit_002 | | | | |
+| ne_NP-chitwan-medium | distance_100m_002 | | | | |
+| ne_NP-chitwan-medium | distance_500m_002 | | | | |
+| ne_NP-chitwan-medium | distance_1km_002 | | | | |
+| ne_NP-chitwan-medium | distance_200m_001 | | | | |
+| ne_NP-chitwan-medium | distance_300m_001 | | | | |
+| ne_NP-chitwan-medium | traffic_ahead_001 | | | | |
+| ne_NP-chitwan-medium | traffic_heavy_002 | | | | |
+| ne_NP-chitwan-medium | accident_ahead_002 | | | | |
+| ne_NP-chitwan-medium | construction_002 | | | | |
+| ne_NP-chitwan-medium | road_closed_002 | | | | |
+| ne_NP-chitwan-medium | speed_camera_001 | | | | |
+| ne_NP-chitwan-medium | speed_camera_002 | | | | |
+| ne_NP-chitwan-medium | redlight_camera_002 | | | | |
+| ne_NP-chitwan-medium | police_002 | | | | |
+| ne_NP-chitwan-medium | arrival_002 | | | | |
+| ne_NP-chitwan-medium | arrival_005 | | | | |
+| ne_NP-chitwan-medium | humor_001 | | | | |
+| ne_NP-chitwan-medium | humor_002 | | | | |
+| ne_NP-chitwan-medium | long_001 | | | | |
+| ne_NP-google-medium | speed_camera_001 | | | | |
+| ne_NP-google-medium | speed_camera_002 | | | | |
+| ne_NP-google-medium | traffic_ahead_001 | | | | |
+| ne_NP-google-medium | distance_500m_002 | | | | |
+| ne_NP-google-medium | humor_002 | | | | |
+| ne_NP-google-medium | turn_left_001 | | | | |
+| ne_NP-google-medium | roundabout_002 | | | | |
+| ne_NP-google-medium | uturn_002 | | | | |
+| ne_NP-google-medium | long_001 | | | | |
+| ne_NP-google-x_low | speed_camera_001 | | | | |
+| ne_NP-google-x_low | speed_camera_002 | | | | |
+| ne_NP-google-x_low | traffic_ahead_001 | | | | |
+| ne_NP-google-x_low | distance_500m_002 | | | | |
+| ne_NP-google-x_low | humor_002 | | | | |
+| ne_NP-google-x_low | turn_left_001 | | | | |
+| ne_NP-google-x_low | roundabout_002 | | | | |
+| ne_NP-google-x_low | uturn_002 | | | | |
+| ne_NP-google-x_low | long_001 | | | | |
+
+> **Note:** `ne_NP-google-medium` emitted `Missing phoneme from id map: ʰ` warnings on
+> some phrases during generation — flag any audible artifacts for those files during
+> listening.
+
+---
+
+## Hybrid Nepali/English experiment (2026-08-15)
+
+**Question:** Can separate Nepali (ne_NP-chitwan-medium) and English (en_US-joe-medium)
+Piper voices, stitched together, produce a more understandable mixed-language
+navigation voice than the Nepali voice alone?
+
+**Files to listen to** — `benchmark/output/hybrid/<phrase_id>/`:
+
+- `version_a.wav` — whole phrase, Nepali voice only (status quo)
+- `version_b.wav` — Nepali voice for Nepali segments + English voice for English segments (stitched)
+- `version_c.wav` — whole phrase, Nepali voice, English words in phonetic Nepali spelling
+
+**Key question:** does the hybrid (B) make English significantly easier to understand
+while remaining natural enough for navigation? Scores are **blank** — fill in during
+listening (1 = poor, 5 = excellent).
+
+| Phrase | Version A | Version B | Version C | English Clarity | Naturalness | Navigation Suitability | Notes |
+| ------ | --------- | --------- | --------- | --------------- | ----------- | ---------------------- | ----- |
+| hybrid_001 (ल भाइ, अगाडि speed camera छ। अब बिस्तारै।) | | | | | | | |
+| hybrid_002 (अगाडि red light camera छ है।) | | | | | | | |
+| hybrid_003 (Keep right है, अगाडि exit आउँदैछ।) | | | | | | | |
+| hybrid_004 (500 meters पछि keep left गर्नुहोस्।) | | | | | | | |
+| hybrid_005 (अगाडि traffic छ, अलि बिस्तारै जाऊ।) | | | | | | | |
+| hybrid_006 (U-turn लिनुपर्ने छ।) | | | | | | | |
+| hybrid_007 (Exit अगाडि नै छ।) | | | | | | | |
+| hybrid_008 (आज police अगाडि छन् है।) | | | | | | | |
+| hybrid_009 (Waze ले route change गरेको छ।) | | | | | | | |
+| hybrid_010 (Speed घटाऊ, अगाडि camera छ।) | | | | | | | |
+
+**Listen for:** English pronunciation in A vs B, voice-switch naturalness, unnatural
+pauses, robotic delivery, number/unit handling (500 meters), and whether the hybrid
+sounds like a coherent navigation voice or a jarring alternation.
+
+---
+
+## English voice evaluation (2026-08-15)
+
+**Context:** voice packs are single-language ([[voice-pack-single-language]] in BRAIN).
+English is evaluated INDEPENDENTLY with English voices only — no mixed-language
+stitching. Three permissive-licensed English voices were benchmarked against the
+47-phrase English corpus (`benchmark/corpus/phrases_en.json`).
+
+**Baseline:** `en_US-joe-medium` (male, CC0). **Candidates:** `en_US-kristin-medium`
+(female, public domain), `en_US-ljspeech-medium` (female, public domain).
+
+**Audio to review:** `benchmark/output/piper/<voice>/<phrase_id>.wav` (47 per voice).
+
+Scores are **blank** — fill in during listening (1 = poor, 5 = excellent). Focus on
+English pronunciation, naturalness, clarity, navigation suitability, numbers,
+speed/distance expressions, sentence endings, and personality fit.
+
+### Directions & distances
+
+| Voice | Phrase ID | Pronunciation | Naturalness | Clarity | Nav Suitability | Notes |
+| ----- | --------- | ------------- | ----------- | ------- | --------------- | ----- |
+| en_US-joe-medium | en_turn_left_001 | | | | | |
+| en_US-joe-medium | en_turn_right_001 | | | | | |
+| en_US-joe-medium | en_keep_left_001 | | | | | |
+| en_US-joe-medium | en_keep_right_001 | | | | | |
+| en_US-joe-medium | en_continue_straight_001 | | | | | |
+| en_US-joe-medium | en_uturn_001 | | | | | |
+| en_US-joe-medium | en_roundabout_001 | | | | | |
+| en_US-joe-medium | en_roundabout_003 | | | | | |
+| en_US-joe-medium | en_exit_001 | | | | | |
+| en_US-joe-medium | en_exit_003 | | | | | |
+| en_US-joe-medium | en_distance_100m_001 | | | | | |
+| en_US-joe-medium | en_distance_500m_001 | | | | | |
+| en_US-joe-medium | en_distance_1km_001 | | | | | |
+| en_US-joe-medium | en_distance_intersection_001 | | | | | |
+| en_US-kristin-medium | en_turn_left_001 | | | | | |
+| en_US-kristin-medium | en_turn_right_001 | | | | | |
+| en_US-kristin-medium | en_uturn_001 | | | | | |
+| en_US-kristin-medium | en_roundabout_002 | | | | | |
+| en_US-kristin-medium | en_exit_002 | | | | | |
+| en_US-kristin-medium | en_distance_500m_001 | | | | | |
+| en_US-kristin-medium | en_distance_1km_001 | | | | | |
+| en_US-ljspeech-medium | en_turn_left_001 | | | | | |
+| en_US-ljspeech-medium | en_turn_right_001 | | | | | |
+| en_US-ljspeech-medium | en_uturn_001 | | | | | |
+| en_US-ljspeech-medium | en_roundabout_001 | | | | | |
+| en_US-ljspeech-medium | en_distance_500m_001 | | | | | |
+| en_US-ljspeech-medium | en_distance_1km_001 | | | | | |
+
+### Traffic & enforcement
+
+| Voice | Phrase ID | Pronunciation | Naturalness | Clarity | Nav Suitability | Notes |
+| ----- | --------- | ------------- | ----------- | ------- | --------------- | ----- |
+| en_US-joe-medium | en_traffic_ahead_001 | | | | | |
+| en_US-joe-medium | en_traffic_heavy_002 | | | | | |
+| en_US-joe-medium | en_accident_ahead_001 | | | | | |
+| en_US-joe-medium | en_hazard_ahead_001 | | | | | |
+| en_US-joe-medium | en_construction_001 | | | | | |
+| en_US-joe-medium | en_road_closed_001 | | | | | |
+| en_US-joe-medium | en_speed_camera_001 | | | | | |
+| en_US-joe-medium | en_redlight_camera_001 | | | | | |
+| en_US-joe-medium | en_police_001 | | | | | |
+| en_US-kristin-medium | en_traffic_heavy_001 | | | | | |
+| en_US-kristin-medium | en_speed_camera_001 | | | | | |
+| en_US-kristin-medium | en_redlight_camera_002 | | | | | |
+| en_US-kristin-medium | en_police_002 | | | | | |
+| en_US-ljspeech-medium | en_traffic_ahead_001 | | | | | |
+| en_US-ljspeech-medium | en_speed_camera_001 | | | | | |
+| en_US-ljspeech-medium | en_redlight_camera_001 | | | | | |
+| en_US-ljspeech-medium | en_police_001 | | | | | |
+
+### Arrival & personality
+
+| Voice | Phrase ID | Pronunciation | Naturalness | Clarity | Nav Suitability | Notes |
+| ----- | --------- | ------------- | ----------- | ------- | --------------- | ----- |
+| en_US-joe-medium | en_arrival_001 | | | | | |
+| en_US-joe-medium | en_arrival_002 | | | | | |
+| en_US-joe-medium | en_arrival_003 | | | | | |
+| en_US-joe-medium | en_personality_simple_001 | | | | | |
+| en_US-joe-medium | en_personality_normal_001 | | | | | |
+| en_US-joe-medium | en_personality_firm_001 | | | | | |
+| en_US-joe-medium | en_personality_savage_001 | | | | | |
+| en_US-joe-medium | en_personality_savage_002 | | | | | |
+| en_US-joe-medium | en_speed_camera_002 (normal) | | | | | |
+| en_US-joe-medium | en_speed_camera_003 (firm) | | | | | |
+| en_US-joe-medium | en_speed_camera_004 (savage) | | | | | |
+| en_US-kristin-medium | en_arrival_001 | | | | | |
+| en_US-kristin-medium | en_arrival_004 | | | | | |
+| en_US-kristin-medium | en_speed_camera_004 (savage) | | | | | |
+| en_US-ljspeech-medium | en_arrival_001 | | | | | |
+| en_US-ljspeech-medium | en_arrival_002 | | | | | |
+| en_US-ljspeech-medium | en_speed_camera_004 (savage) | | | | | |
+
+**Personality reference (all three voices, `en_speed_camera_00{1,2,3,4}`):**
+simple → normal → firm → savage progression. Evaluate whether the voice carries the
+intended personality without sounding forced.
+
+---
 
 ## Evaluation dimensions (future work)
 

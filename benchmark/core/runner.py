@@ -33,6 +33,11 @@ class BenchmarkConfig:
     results_dir: Path = Path("benchmark/results")
     sample_rate: int = STANDARD_SAMPLE_RATE
     force: bool = False
+    #: Optional subdirectory per engine name, e.g. {"piper": "ne_NP-chitwan-medium"}
+    #: isolates runs of the same engine with different voices/settings:
+    #: output -> <output_root>/<engine>/<subdir>/<phrase_id>.wav,
+    #: results -> <results_dir>/<engine>-<subdir>.json|csv.
+    subdirs: dict[str, str] = field(default_factory=dict)
 
     def engine_dirs(self) -> dict[str, Path]:
         return {name: self.output_root / name for name in self.engines}
@@ -59,14 +64,22 @@ class BenchmarkRunner:
 
     # -- path helpers --------------------------------------------------------
 
+    def _subdir_for(self, engine_name: str) -> Path | None:
+        sub = self.config.subdirs.get(engine_name)
+        return Path(sub) if sub else None
+
     def output_dir_for(self, engine_name: str) -> Path:
-        return self.config.output_root / engine_name
+        base = self.config.output_root / engine_name
+        sub = self._subdir_for(engine_name)
+        return base / sub if sub is not None else base
 
     def output_path_for(self, engine_name: str, phrase_id: str) -> Path:
         return self.output_dir_for(engine_name) / f"{phrase_id}.wav"
 
     def results_file_for(self, engine_name: str) -> Path:
-        return self.config.results_dir / f"{engine_name}.json"
+        sub = self._subdir_for(engine_name)
+        stem = f"{engine_name}-{sub}" if sub is not None else engine_name
+        return self.config.results_dir / f"{stem}.json"
 
     # -- generation ----------------------------------------------------------
 
@@ -211,7 +224,7 @@ class BenchmarkRunner:
                     "error_message": r.error_message,
                 }
             )
-        path = self.config.results_dir / f"{engine_name}.csv"
+        path = self.config.results_dir / f"{self.results_file_for(engine_name).stem}.csv"
         with path.open("w", newline="", encoding="utf-8") as fh:
             writer = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
             writer.writeheader()
