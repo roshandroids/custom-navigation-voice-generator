@@ -4,25 +4,23 @@ title: "Research finding: Piper has identifiable Nepali voices — first candida
 category: decision
 status: active
 created: "2026-08-15T02:14:41"
-updated: "2026-08-15T02:14:41"
+updated: "2026-08-15T02:40:54"
 ---
 
 <!-- compiled_truth -->
-# Research finding: Piper has identifiable Nepali voices
+# Verified: Piper has working Nepali voices
 
-**Finding (research, not final decision):** Piper is the only TTS candidate with identifiable Nepali voices.
+**Verified by experiment (2026-08-15) on Apple M1 (CPU):** Piper successfully generates Nepali speech from Devanagari text with all three official ne_NP voices:
 
-Verified from `rhasspy/piper` `VOICES.md` (v1.0.0):
+- `ne_NP-chitwan-medium` — 22,050 Hz, 1 speaker, dataset CC0
+- `ne_NP-google-medium` — 22,050 Hz, 18 speakers, dataset CC-BY-SA-4.0
+- `ne_NP-google-x_low` — 16,000 Hz, 18 speakers, dataset CC-BY-SA-4.0
 
-- `ne_NP-chitwan-medium`
-- `ne_NP-google-x_low`
-- `ne_NP-google-medium`
+Result: 50/50 benchmark phrases succeeded per voice (150/150 total) with Devanagari input preserved — **no Latin-script fallback needed for Piper**.
 
-Consequence: **Piper is the first candidate we intend to test with real audio** (install Piper, generate real Nepali WAVs).
+This is a **capability verification, NOT a final engine-selection decision** — speech quality, pronunciation, and navigation clarity are still unproven until human listening evaluation. See [[tts-candidates]], [[engine-selection-pending]], [[piper-performance-baseline]].
 
-This is a **research finding, NOT a final engine-selection decision** — speech quality, pronunciation, and navigation clarity for Nepali are unproven until actual evaluation. See [[tts-candidates]], [[engine-selection-pending]].
-
-Blast radius: prioritizes the next experiment (install Piper first) without pre-committing to Piper as the winner.
+Blast radius: Piper is confirmed as the working baseline for the benchmark; the remaining question is quality, not viability.
 
 
 ## Timeline
@@ -37,4 +35,22 @@ Blast radius: prioritizes the next experiment (install Piper first) without pre-
   kind: decision
   summary: verified from rhasspy/piper VOICES.md
   source: web research 2026-08-15
+  affects: [piper-nepali-voices]
+
+- time: 2026-08-15T02:34:32
+  kind: evidence
+  summary: "VERIFIED 2026-08-15: all three ne_NP voices (chitwan-medium, google-medium, google-x_low) download, load, and synthesize Devanagari text into valid WAVs on M1 CPU. 50/50 phrases succeeded per voice. Piper runs the full benchmark."
+  source: piper experiment 2026-08-15
+  affects: [piper-nepali-voices, tts-candidates]
+
+- time: 2026-08-15T02:34:54
+  kind: decision
+  summary: "voice availability verified by experiment; research finding upgraded to verified"
+  source: piper experiment 2026-08-15
+  affects: [piper-nepali-voices]
+
+- time: 2026-08-15T02:40:54
+  kind: note
+  summary: "Quality signal: ne_NP-google-medium emitted 'Missing phoneme from id map: ʰ' warnings on some phrases during generation. Flag for human listening evaluation; not a generation failure."
+  source: piper experiment 2026-08-15
   affects: [piper-nepali-voices]

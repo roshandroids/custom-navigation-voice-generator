@@ -17,6 +17,8 @@ VALID_CATEGORIES = {
     "enforcement",
     "arrival",
     "language_tests",
+    "start_of_drive",
+    "other",
 }
 ID_PATTERN = re.compile(r"^[a-z0-9_]+$")
 

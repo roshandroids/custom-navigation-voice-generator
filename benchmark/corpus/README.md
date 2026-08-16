@@ -8,7 +8,9 @@ makes engine comparisons meaningful.
 
 | File          | Purpose                                                                 |
 | ------------- | ----------------------------------------------------------------------- |
-| `phrases.json`| The corpus itself — an array of phrase entries with stable IDs.          |
+| `phrases.json`| The main 50-phrase corpus (Nepali/English/mixed).                        |
+| `phrases_en.json` | English-only 47-phrase corpus — natural English phrasing, same categories, plus personality-style phrases. Used for standalone English voice evaluation (voice packs are single-language). |
+| `hybrid_phrases.json` | **Experimental** — explicit-segment mixed Nepali/English phrases from the hybrid experiment. Historical evidence only; NOT part of the MVP (voice packs are single-language). |
 | `schema.json` | (referenced by `$schema`) The JSON schema the corpus validates against. |
 
 ## Corpus schema
@@ -24,6 +26,23 @@ Each phrase is an object with the following fields:
 | `tts_text`            | no       | Latin-script rendering for engines that cannot process Devanagari. `null`/absent when the text is already Latin. |
 | `expected_pronunciation` | no    | Informal pronunciation guidance for human evaluators. Benchmark material, not product copy. |
 | `tags`                | no       | Free-form tags: `short`, `number`, `mixed`, `english_word`, `humor`, `conversational`, `long`, `devanagari_number`. |
+| `review_status`       | no       | Content review status: `draft`, `needs-review`, or `approved`. Rewritten phrases are initially `needs-review` — native-speaker review is required before the corpus is treated as final. |
+
+## Content principles (Nepali phrases)
+
+The Nepali phrases are **authored as native conversational Nepali** — not literal
+translations of the English phrases. The English phrase defines the *navigation
+meaning*; the Nepali wording is written the way a Nepali person would naturally say it
+while driving. Per the product requirement ([[voice-pack-single-language]] in BRAIN):
+
+- The Nepali TTS input is primarily Devanagari. **No unnecessary Latin-script English
+  is sent to the Nepali voice.**
+- Borrowed English-origin words that are genuinely natural in spoken Nepali
+  (स्पिड, क्यामेरा, ट्राफिक, पुलिस) are kept, written in Devanagari.
+- Personality (simple / normal / firm / savage) modifies wording and delivery while
+  **preserving the navigation meaning** and staying pleasant on repeated listening.
+- Deliberate edge-case tests (Latin English, digits, hard words) live only in the
+  `language_tests` category — they do not dictate how product scripts are written.
 
 Additional metadata (e.g. `description`, TTS-specific hint fields) can be added later
 without breaking existing entries — extra fields are ignored by the validator as long as

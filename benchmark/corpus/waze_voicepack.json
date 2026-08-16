@@ -1,0 +1,830 @@
+{
+  "$schema": "./schema.json",
+  "version": 1,
+  "description": "Waze 'Record your own voice' custom voice-pack script. Sourced verbatim from the Waze iOS app's Nepali-voice recording screen (screenshots, 2026-08-15): categories 'Start of drive', 'Distances', 'Instructions', 'Reports', 'Other', 43 English prompts, each with a natural-spoken-Nepali counterpart. Every phrase is a standalone clip (Waze's own '6 seconds max' constraint) meant to be concatenated at runtime with other clips (e.g. a distance clip followed by an instruction clip) - so wording must stay exactly this atomic, not merged into combined sentences like the main benchmark corpus.",
+  "metadata_notes": {
+    "waze_group": "The original Waze UI section this phrase was recorded under (Start of drive / Distances / Instructions / Reports / Other) - kept for traceability since it doesn't map 1:1 onto this project's 'category' field.",
+    "tts_text": "Latin-script rendering of the Nepali portion, for engines/humans that cannot read Devanagari.",
+    "review_status": "All Nepali entries are 'needs-review' - fresh translations authored for this task, following the naturalness principles in docs/nepali-human-review-v2.md, but not yet confirmed by a native speaker.",
+    "content_principles": "Same as the main corpus: natural spoken Nepali, not literal translation. Notable choices: माइल (mile) kept as a loanword since Waze can run in imperial-unit locales; डेढ used for '1.5' instead of a decimal calque; रातो बत्तीमा क्यामेरा / बाटोबाट निस्कनुहोस् reuse the fixes proposed in nepali-human-review-v2.md rather than repeating the calques (निकास, रातो बत्ती क्यामेरा) originally in phrases.json."
+  },
+  "phrases": [
+    {
+      "id": "wz_start_allset_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "All set. Let's go!",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_allset_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "भयो, जाऔं!",
+      "tts_text": "Bhayo, jaun!",
+      "expected_pronunciation": "Casual: 'done, let's go!'",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_wereallset_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "We're all set. Let's go!",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_wereallset_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "सबै तयार भयो, जाऔं!",
+      "tts_text": "Sabai tayar bhayo, jaun!",
+      "expected_pronunciation": "'everything's ready, let's go!'",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_startdriving_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "Start driving",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_startdriving_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "गाडी बढाउनुहोस्।",
+      "tts_text": "Gadi badhaunuhos.",
+      "expected_pronunciation": "'move the car forward / get going' - revised from गाडी चलाउनुहोस् (a stiffer, literal-translation-flavored 'operate the car'); बढाउनुहोस् is the natural cue Nepali speakers use to tell someone to start moving a vehicle.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_getstarted_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "Let's get started - drive safe!",
+      "tags": ["waze_voicepack", "conversational"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_getstarted_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "अब सावधानीसाथ जाऔं!",
+      "tts_text": "Ab sabadhanisatha jaun!",
+      "expected_pronunciation": "'let's go carefully now!' - single cohortative voice, avoids mixing 'let's' with a separate imperative.",
+      "tags": ["waze_voicepack", "conversational"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_hittheroad_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "All set. Let's hit the road.",
+      "tags": ["waze_voicepack", "conversational"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_hittheroad_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "भयो, बाटो लागौं!",
+      "tts_text": "Bhayo, bato lagaun!",
+      "expected_pronunciation": "बाटो लाग्नु is the idiomatic Nepali equivalent of 'hit the road' - a genuine idiom match, not a calque.",
+      "tags": ["waze_voicepack", "conversational"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_youready_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "You ready? I am! Let's go!",
+      "tags": ["waze_voicepack", "conversational"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_youready_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "तयार हुनुभयो? म तयार छु! जाऔं!",
+      "tts_text": "Tayar hunubhayo? Ma tayar chu! Jaun!",
+      "expected_pronunciation": "'Are you ready? I'm ready! Let's go!'",
+      "tags": ["waze_voicepack", "conversational"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_readytoroll_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "We're ready to roll. Drive safe!",
+      "tags": ["waze_voicepack", "conversational"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_readytoroll_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "हामी तयार छौं, होसियारीसाथ जाऔं!",
+      "tts_text": "Hami tayar chau, hosiyarisatha jaun!",
+      "expected_pronunciation": "'We're ready, let's go carefully!' - revised from ...चलाऔं (चलाउनु/'drive' is transitive and reads incomplete without a stated object like गाडी); जाऔं ('let's go') is the natural intransitive cohortative that needs no object.",
+      "tags": ["waze_voicepack", "conversational"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_pleasantdrive_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "Have a pleasant drive!",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_pleasantdrive_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "तपाईंको यात्रा शुभ होस्!",
+      "tts_text": "Tapaiko yatra shubha hos!",
+      "expected_pronunciation": "Standard Nepali travel well-wish - 'may your journey be good!'",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_herewego_en",
+      "category": "start_of_drive",
+      "language": "en",
+      "text": "Ok, here we go!",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_start_herewego_ne",
+      "category": "start_of_drive",
+      "language": "ne",
+      "text": "लौ, जाऔं!",
+      "tts_text": "Lau, jaun!",
+      "expected_pronunciation": "'well then, let's go!' - same लौ filler used elsewhere in the corpus's casual/personality lines.",
+      "tags": ["waze_voicepack", "conversational", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Start of drive"
+    },
+    {
+      "id": "wz_dist_01mi_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 0.1 miles",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_01mi_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "पोइन्ट एक माइलपछि।",
+      "tts_text": "Point ek mailpachhi.",
+      "expected_pronunciation": "'point one' (पोइन्ट) is how educated Nepali speakers say a decimal aloud in casual speech; माइल kept as a loanword for imperial-unit locales.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_qtrmi_en",
+      "category": "distances",
+      "language": "en",
+      "text": "in a quarter of a mile",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_qtrmi_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "पाव माइलपछि।",
+      "tts_text": "Pau mailpachhi.",
+      "expected_pronunciation": "पाव = quarter, the same everyday word used for पाव किलो (quarter kilo) - natural, not a formal fraction.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_halfmi_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In half a mile",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_halfmi_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "आधा माइलपछि।",
+      "tts_text": "Adha mailpachhi.",
+      "expected_pronunciation": "आधा = half, plain and natural.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_1mi_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 1 mile",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_1mi_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "एक माइलपछि।",
+      "tts_text": "Ek mailpachhi.",
+      "expected_pronunciation": "Unlike एक सय, एक माइल keeps its numeral - 'one mile' isn't shortened in speech.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_200m_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 200 meters",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_200m_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "दुई सय मिटरपछि।",
+      "tts_text": "Dui saya meterpachhi.",
+      "expected_pronunciation": "Matches distance_200m_001 in the main corpus.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_400m_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 400 meters",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_400m_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "चार सय मिटरपछि।",
+      "tts_text": "Char saya meterpachhi.",
+      "expected_pronunciation": "चार सय keeps its numeral, like दुई/तीन/पाँच सय.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_800m_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 800 meters",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_800m_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "आठ सय मिटरपछि।",
+      "tts_text": "Ath saya meterpachhi.",
+      "expected_pronunciation": "आठ सय keeps its numeral.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_1km_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 1 kilometer",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_1km_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "एक किलोमिटरपछि।",
+      "tts_text": "Ek kilometerpachhi.",
+      "expected_pronunciation": "Matches distance_1km_002 in the main corpus.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_15km_en",
+      "category": "distances",
+      "language": "en",
+      "text": "In 1.5 kilometers",
+      "tags": ["waze_voicepack", "number", "short"],
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_dist_15km_ne",
+      "category": "distances",
+      "language": "ne",
+      "text": "डेढ किलोमिटरपछि।",
+      "tts_text": "Dedh kilometerpachhi.",
+      "expected_pronunciation": "डेढ ('one and a half') is the natural spoken Nepali word for 1.5 - much more natural than a decimal calque like 'एक दशमलव पाँच'.",
+      "tags": ["waze_voicepack", "number", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Distances"
+    },
+    {
+      "id": "wz_instr_keepleft_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Keep left",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_keepleft_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "देब्रेतिर लाग्नुहोस्।",
+      "tts_text": "Debretira lagnuhos.",
+      "expected_pronunciation": "Matches keep_left_002 in the main corpus.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_keepright_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Keep right",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_keepright_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "दायाँतिर लाग्नुहोस्।",
+      "tts_text": "Dayatira lagnuhos.",
+      "expected_pronunciation": "Matches distance_500m_002's keep-right verb.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_turnleft_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Turn left",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_turnleft_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "देब्रे मोड्नुहोस्।",
+      "tts_text": "Debre modnuhos.",
+      "expected_pronunciation": "Matches turn_left_001.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_turnright_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Turn right",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_turnright_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "दायाँ मोड्नुहोस्।",
+      "tts_text": "Daya modnuhos.",
+      "expected_pronunciation": "Matches turn_right_001.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exitleft_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Exit left",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exitleft_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "देब्रेबाट बाहिर निस्कनुहोस्।",
+      "tts_text": "Debrebata bahira niskanuhos.",
+      "expected_pronunciation": "'exit via the left' - describes the physical action (निस्कनुहोस्) rather than naming an abstract 'exit' noun; consistent with the roundabout/exit fix in nepali-human-review-v2.md.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exitright_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Exit right",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exitright_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "दायाँबाट बाहिर निस्कनुहोस्।",
+      "tts_text": "Dayabata bahira niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exitleft_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_continuestraight_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Continue straight",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_continuestraight_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "सीधा जानुहोस्।",
+      "tts_text": "Sidha januhos.",
+      "expected_pronunciation": "Matches continue_straight_002.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_uturn_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Make a U-turn",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_uturn_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "यू-टर्न लिनुहोस्।",
+      "tts_text": "U-turn linuhos.",
+      "expected_pronunciation": "Matches uturn_002.",
+      "tags": ["waze_voicepack", "short", "english_word"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_atroundabout_en",
+      "category": "directions",
+      "language": "en",
+      "text": "At the roundabout",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_atroundabout_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "राउन्डअबाउटमा।",
+      "tts_text": "Roundaboutma.",
+      "expected_pronunciation": "Standalone locative fragment - Waze plays this then concatenates 'Take the Nth exit' as a separate clip.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit1_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the first exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit1_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "पहिलो बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Pahilo batobata niskanuhos.",
+      "expected_pronunciation": "'exit via the first road' - implements the REVISE fix proposed for roundabout_002 in nepali-human-review-v2.md instead of repeating the निकास calque.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit2_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the second exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit2_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "दोस्रो बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Dosro batobata niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exit1_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit3_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the third exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit3_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "तेस्रो बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Tesro batobata niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exit1_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit4_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the fourth exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit4_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "चौथो बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Chautho batobata niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exit1_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit5_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the fifth exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit5_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "पाँचौं बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Panchau batobata niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exit1_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit6_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the sixth exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit6_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "छैटौं बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Chhaitau batobata niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exit1_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit7_en",
+      "category": "directions",
+      "language": "en",
+      "text": "Take the seventh exit",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_instr_exit7_ne",
+      "category": "directions",
+      "language": "ne",
+      "text": "सातौं बाटोबाट निस्कनुहोस्।",
+      "tts_text": "Satau batobata niskanuhos.",
+      "expected_pronunciation": "Mirrors wz_instr_exit1_ne.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Instructions"
+    },
+    {
+      "id": "wz_report_police_en",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Police reported",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_police_ne",
+      "category": "enforcement",
+      "language": "ne",
+      "text": "अगाडि पुलिस छ।",
+      "tts_text": "Agadi pulis chha.",
+      "expected_pronunciation": "Matches police_002 - a Nepali speaker states a police report the same way as a plain observation, no separate 'reported' verb needed.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_crash_en",
+      "category": "traffic",
+      "language": "en",
+      "text": "Crash reported",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_crash_ne",
+      "category": "traffic",
+      "language": "ne",
+      "text": "अगाडि दुर्घटना छ।",
+      "tts_text": "Agadi durghatana chha.",
+      "expected_pronunciation": "Matches accident_ahead_002.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_hazard_en",
+      "category": "traffic",
+      "language": "en",
+      "text": "Hazard reported",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_hazard_ne",
+      "category": "traffic",
+      "language": "ne",
+      "text": "अगाडि खतरा छ।",
+      "tts_text": "Agadi khatara chha.",
+      "expected_pronunciation": "खतरा (danger) is the natural everyday word; जोखिम (risk) would read as more formal/insurance-register.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_heavytraffic_en",
+      "category": "traffic",
+      "language": "en",
+      "text": "Heavy traffic reported",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_heavytraffic_ne",
+      "category": "traffic",
+      "language": "ne",
+      "text": "बाटोमा धेरै ट्राफिक छ।",
+      "tts_text": "Batoma dherai traffic chha.",
+      "expected_pronunciation": "Matches traffic_heavy_002.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_redlightcam_en",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Red light camera reported",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_redlightcam_ne",
+      "category": "enforcement",
+      "language": "ne",
+      "text": "अगाडि रातो बत्तीमा क्यामेरा छ।",
+      "tts_text": "Agadi rato battima camera chha.",
+      "expected_pronunciation": "Locative रातो बत्तीमा ('at the red light') instead of the compound-noun calque रातो बत्ती क्यामेरा - the fix proposed for redlight_camera_002 in nepali-human-review-v2.md. No stop command here since this is just the report notice, not the enforcement warning.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_speedcam_en",
+      "category": "enforcement",
+      "language": "en",
+      "text": "Speed camera reported",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_report_speedcam_ne",
+      "category": "enforcement",
+      "language": "ne",
+      "text": "अगाडि स्पिड क्यामेरा छ।",
+      "tts_text": "Agadi speed camera chha.",
+      "expected_pronunciation": "Matches speed_camera_001.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Reports"
+    },
+    {
+      "id": "wz_other_andthen_en",
+      "category": "other",
+      "language": "en",
+      "text": "And then",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Other"
+    },
+    {
+      "id": "wz_other_andthen_ne",
+      "category": "other",
+      "language": "ne",
+      "text": "अनि",
+      "tts_text": "Ani",
+      "expected_pronunciation": "Conversational connector clip, played between two instruction clips. अनि (then) instead of the more formal त्यासपछि - the connector fix proposed for long_001 in nepali-human-review-v2.md.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Other"
+    },
+    {
+      "id": "wz_other_rerouting_en",
+      "category": "other",
+      "language": "en",
+      "text": "Rerouting",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Other"
+    },
+    {
+      "id": "wz_other_rerouting_ne",
+      "category": "other",
+      "language": "ne",
+      "text": "नयाँ बाटो खोजिँदैछ।",
+      "tts_text": "Naya bato khojindaicha.",
+      "expected_pronunciation": "'a new route is being searched for' - revised from ...खोज्दैछौं ('we're searching'); the source 'Rerouting' is a neutral single-word system status, not a personality line, so the impersonal/passive form matches its register better than an unprompted 'we' framing.",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Other"
+    },
+    {
+      "id": "wz_other_arrived_en",
+      "category": "arrival",
+      "language": "en",
+      "text": "You've arrived",
+      "tags": ["waze_voicepack", "short"],
+      "waze_group": "Other"
+    },
+    {
+      "id": "wz_other_arrived_ne",
+      "category": "arrival",
+      "language": "ne",
+      "text": "तपाईं आइपुग्नुभयो।",
+      "tts_text": "Tapai aipugnu bhayou.",
+      "expected_pronunciation": "Short form of arrival_002 (drops गन्तव्यमा since this clip alone doesn't mention destination, matching Waze's shorter 'You've arrived').",
+      "tags": ["waze_voicepack", "short"],
+      "review_status": "needs-review",
+      "waze_group": "Other"
+    }
+  ]
+}

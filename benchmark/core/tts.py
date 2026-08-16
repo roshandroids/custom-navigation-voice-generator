@@ -29,6 +29,9 @@ class AudioInfo:
     format: str = "wav"
     codec: str = "pcm"
 
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
 
 @dataclass
 class SynthesisResult:

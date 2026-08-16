@@ -21,14 +21,15 @@
         "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
         "category": {
           "type": "string",
-          "enum": ["directions", "distances", "traffic", "enforcement", "arrival", "language_tests"]
+          "enum": ["directions", "distances", "traffic", "enforcement", "arrival", "language_tests", "start_of_drive", "other"]
         },
         "language": { "type": "string", "enum": ["ne", "en", "ne-en"] },
         "text": { "type": "string", "minLength": 1 },
         "tts_text": { "type": ["string", "null"] },
         "expected_pronunciation": { "type": ["string", "null"] },
         "description": { "type": ["string", "null"] },
-        "tags": { "type": "array", "items": { "type": "string" } }
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "review_status": { "type": "string", "enum": ["draft", "needs-review", "approved"] }
       },
       "additionalProperties": true
     }

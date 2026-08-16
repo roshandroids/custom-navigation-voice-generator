@@ -1,0 +1,239 @@
+{
+  "$comment": "Hybrid Nepali/English TTS experiment corpus. Segments are EXPLICITLY defined (no automatic language detection). Each segment has language ne or en and the exact text. Version C (optional) provides a phonetic Nepali spelling of the English segment, spoken by the Nepali voice.",
+  "version": 1,
+  "voice_config": {
+    "ne": "ne_NP-chitwan-medium",
+    "en": "en_US-joe-medium",
+    "output_sample_rate": 22050
+  },
+  "phrases": [
+    {
+      "id": "hybrid_001",
+      "text": "ल भाइ, अगाडि speed camera छ। अब बिस्तारै।",
+      "segments": [
+        {
+          "language": "ne",
+          "text": "ल भाइ, अगाडि"
+        },
+        {
+          "language": "en",
+          "text": "speed camera"
+        },
+        {
+          "language": "ne",
+          "text": "छ। अब बिस्तारै।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "ल भाइ, अगाडि स्पिड क्यामेरा छ। अब बिस्तारै।"
+      }
+    },
+    {
+      "id": "hybrid_002",
+      "text": "अगाडि red light camera छ है।",
+      "segments": [
+        {
+          "language": "ne",
+          "text": "अगाडि"
+        },
+        {
+          "language": "en",
+          "text": "red light camera"
+        },
+        {
+          "language": "ne",
+          "text": "छ है।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "अगाडि रेड लाइट क्यामेरा छ है।"
+      }
+    },
+    {
+      "id": "hybrid_003",
+      "text": "Keep right है, अगाडि exit आउँदैछ।",
+      "segments": [
+        {
+          "language": "en",
+          "text": "Keep right"
+        },
+        {
+          "language": "ne",
+          "text": "है, अगाडि"
+        },
+        {
+          "language": "en",
+          "text": "exit"
+        },
+        {
+          "language": "ne",
+          "text": "आउँदैछ।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "किप राइट है, अगाडि एक्जिट आउँदैछ।"
+      }
+    },
+    {
+      "id": "hybrid_004",
+      "text": "500 meters पछि keep left गर्नुहोस्।",
+      "segments": [
+        {
+          "language": "en",
+          "text": "500 meters"
+        },
+        {
+          "language": "ne",
+          "text": "पछि"
+        },
+        {
+          "language": "en",
+          "text": "keep left"
+        },
+        {
+          "language": "ne",
+          "text": "गर्नुहोस्।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "५०० मिटरपछि किप लेफ्ट गर्नुहोस्।"
+      }
+    },
+    {
+      "id": "hybrid_005",
+      "text": "अगाडि traffic छ, अलि बिस्तारै जाऊ।",
+      "segments": [
+        {
+          "language": "ne",
+          "text": "अगाडि"
+        },
+        {
+          "language": "en",
+          "text": "traffic"
+        },
+        {
+          "language": "ne",
+          "text": "छ, अलि बिस्तारै जाऊ।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "अगाडि ट्राफिक छ, अलि बिस्तारै जाऊ।"
+      }
+    },
+    {
+      "id": "hybrid_006",
+      "text": "U-turn लिनुपर्ने छ।",
+      "segments": [
+        {
+          "language": "en",
+          "text": "U-turn"
+        },
+        {
+          "language": "ne",
+          "text": "लिनुपर्ने छ।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "यू-टर्न लिनुपर्ने छ।"
+      }
+    },
+    {
+      "id": "hybrid_007",
+      "text": "Exit अगाडि नै छ।",
+      "segments": [
+        {
+          "language": "en",
+          "text": "Exit"
+        },
+        {
+          "language": "ne",
+          "text": "अगाडि नै छ।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "एक्जिट अगाडि नै छ।"
+      }
+    },
+    {
+      "id": "hybrid_008",
+      "text": "आज police अगाडि छन् है।",
+      "segments": [
+        {
+          "language": "ne",
+          "text": "आज"
+        },
+        {
+          "language": "en",
+          "text": "police"
+        },
+        {
+          "language": "ne",
+          "text": "अगाडि छन् है।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "आज पुलिस अगाडि छन् है।"
+      }
+    },
+    {
+      "id": "hybrid_009",
+      "text": "Waze ले route change गरेको छ।",
+      "segments": [
+        {
+          "language": "en",
+          "text": "Waze"
+        },
+        {
+          "language": "ne",
+          "text": "ले"
+        },
+        {
+          "language": "en",
+          "text": "route change"
+        },
+        {
+          "language": "ne",
+          "text": "गरेको छ।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "वेजले रुट चेन्ज गरेको छ।"
+      }
+    },
+    {
+      "id": "hybrid_010",
+      "text": "Speed घटाऊ, अगाडि camera छ।",
+      "segments": [
+        {
+          "language": "en",
+          "text": "Speed"
+        },
+        {
+          "language": "ne",
+          "text": "घटाऊ, अगाडि"
+        },
+        {
+          "language": "en",
+          "text": "camera"
+        },
+        {
+          "language": "ne",
+          "text": "छ।"
+        }
+      ],
+      "version_c": {
+        "language": "ne",
+        "text": "स्पिड घटाऊ, अगाडि क्यामेरा छ।"
+      }
+    }
+  ]
+}
