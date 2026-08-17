@@ -24,12 +24,20 @@ dev = [
     "pytest>=8.0",
     "ruff>=0.6",
 ]
+# TTS HTTP service. piper-tts is intentionally NOT a dependency (GPL-3.0,
+# see docs/decisions/engine-licensing.md) — install it manually or via PIPER_BIN.
+server = [
+    "fastapi",
+    "uvicorn[standard]",
+    "httpx",  # TestClient for the FastAPI routes
+]
 
 [project.scripts]
 benchmark-run = "benchmark.scripts.run_benchmark:main"
 corpus-validate = "benchmark.scripts.validate_corpus:main"
 corpus-add-phrase = "tools.add_phrase:main"
 waze-voicepack-run = "benchmark.scripts.run_waze_voicepack:main"
+run-tts-server = "server.__main__:main"
 
 [tool.setuptools]
 packages = [
@@ -43,13 +51,14 @@ packages = [
     "benchmark.engines.chatterbox",
     "benchmark.scripts",
     "tools",
+    "server",
 ]
 
 [tool.setuptools.package-data]
 "benchmark.corpus" = ["phrases.json"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "server/tests"]
 addopts = "-q"
 
 [tool.ruff]
