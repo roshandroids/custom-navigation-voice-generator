@@ -1,19 +1,31 @@
+import 'dart:typed_data';
+
 /// A generated or simulated audio asset.
 ///
-/// Domain-level representation of audio: the frontend does not ship real
-/// audio for the MVP, so assets are metadata-only and playback is simulated.
+/// Domain-level representation of audio. The asset may carry either raw
+/// [bytes] (the download path) and/or a streamable [uri] (the stream path).
+/// When both are null the asset is metadata-only (unplayable) — the mock uses
+/// this shape.
 final class AudioAsset {
   const AudioAsset({
     required this.id,
     required this.duration,
     required this.format,
     required this.kind,
+    this.bytes,
+    this.uri,
   });
 
   final AudioAssetId id;
   final Duration duration;
   final AudioFormat format;
   final AudioKind kind;
+
+  /// Raw WAV data (download path). Null when the asset carries no audio.
+  final Uint8List? bytes;
+
+  /// Streamable URL for the audio (stream path). Null when not available.
+  final Uri? uri;
 }
 
 final class AudioAssetId {
