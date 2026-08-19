@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:navigation_voice_generator/core/config/app_config.dart';
 import 'package:navigation_voice_generator/core/result/result.dart';
 import 'package:navigation_voice_generator/features/export/data/repositories/mock_export_repository.dart';
 import 'package:navigation_voice_generator/features/export/domain/repositories/export_repository.dart';
@@ -6,7 +7,7 @@ import 'package:navigation_voice_generator/features/instructions/data/repositori
 import 'package:navigation_voice_generator/features/instructions/domain/repositories/instruction_repository.dart';
 import 'package:navigation_voice_generator/features/suggestions/data/repositories/mock_suggestion_repository.dart';
 import 'package:navigation_voice_generator/features/suggestions/domain/repositories/suggestion_repository.dart';
-import 'package:navigation_voice_generator/features/tts/data/repositories/mock_tts_repository.dart';
+import 'package:navigation_voice_generator/features/tts/data/repositories/http_tts_repository.dart';
 import 'package:navigation_voice_generator/features/tts/domain/repositories/tts_repository.dart';
 import 'package:navigation_voice_generator/features/voice_packs/data/repositories/in_memory_voice_pack_repository.dart';
 import 'package:navigation_voice_generator/features/voice_packs/domain/entities/voice_pack.dart';
@@ -60,10 +61,10 @@ final instructionRepositoryProvider = Provider<InstructionRepository>((ref) {
   return InMemoryInstructionRepository.seeded();
 });
 
-/// The mock TTS implementation — the future integration point for
-/// `HttpTtsRepository` (Flutter → FastAPI → Piper).
+/// Real TTS: the FastAPI service (Flutter → FastAPI → Piper). Swaps in place
+/// of the mock; tests may override this provider with a fake/mock.
 final ttsRepositoryProvider = Provider<TtsRepository>((ref) {
-  return MockTtsRepository();
+  return HttpTtsRepository(baseUri: Uri.parse(AppConfig.apiBaseUrl));
 });
 
 final suggestionRepositoryProvider = Provider<SuggestionRepository>((ref) {
