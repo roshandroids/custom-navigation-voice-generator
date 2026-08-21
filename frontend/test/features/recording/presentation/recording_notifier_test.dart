@@ -1,11 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:navigation_voice_generator/app/di/presentation_providers.dart';
 import 'package:navigation_voice_generator/app/di/providers.dart';
 import 'package:navigation_voice_generator/core/error/failures.dart';
 import 'package:navigation_voice_generator/core/result/result.dart';
+import 'package:navigation_voice_generator/core/timing/audio_playback.dart';
 import 'package:navigation_voice_generator/core/timing/countdown_ticker.dart';
-import 'package:navigation_voice_generator/core/timing/playback_scheduler.dart';
 import 'package:navigation_voice_generator/features/instructions/domain/entities/instruction.dart';
 import 'package:navigation_voice_generator/features/instructions/domain/entities/instruction_category.dart';
 import 'package:navigation_voice_generator/features/instructions/domain/repositories/instruction_repository.dart';
@@ -35,15 +37,27 @@ class FakeCountdownTicker implements CountdownTicker {
   void fireTick() => onTick?.call();
 }
 
-/// A fake playback scheduler that records the completion callback so tests
-/// can fire it deterministically.
-class FakePlaybackScheduler implements PlaybackScheduler {
+/// A fake audio playback that records the completion callback and what was
+/// asked to play, so tests can fire completion deterministically.
+class FakeAudioPlayback implements AudioPlayback {
   void Function()? onComplete;
+  Duration? simulatedDuration;
+  Uint8List? bytes;
+  Uri? uri;
   bool cancelled = false;
 
   @override
-  void schedule(Duration delay, void Function() onComplete) {
+  void start({
+    Uint8List? bytes,
+    Uri? uri,
+    required Duration simulatedDuration,
+    required void Function() onComplete,
+  }) {
     this.onComplete = onComplete;
+    this.simulatedDuration = simulatedDuration;
+    this.bytes = bytes;
+    this.uri = uri;
+    cancelled = false;
   }
 
   @override
@@ -118,13 +132,32 @@ class FakeInstructionRepository implements InstructionRepository {
       Ok(instructions.where((i) => i.packId == packId && i.isRecorded).length);
 }
 
-Instruction makeInstruction(VoicePackId packId, String id) => Instruction(
+Instruction makeInstruction(
+  VoicePackId packId,
+  String id, {
+  AudioAsset? audio,
+}) =>
+    Instruction(
       id: InstructionId(id),
       packId: packId,
       category: InstructionCategory.directions,
       situation: 'बायाँ मोड',
       standardText: 'देब्रे मोड्नुहोस्।',
       customText: 'देब्रे मोड्नुहोस्।',
+    ).withAudioIfPresent(audio);
+
+extension on Instruction {
+  Instruction withAudioIfPresent(AudioAsset? audio) =>
+      audio == null ? this : withAudio(audio);
+}
+
+AudioAsset assetWithPayload() => AudioAsset(
+      id: const AudioAssetId('audio-1'),
+      duration: const Duration(seconds: 4),
+      format: AudioFormat.wav,
+      kind: AudioKind.clean,
+      bytes: Uint8List.fromList([0x52, 0x49, 0x46, 0x46]),
+      uri: Uri.parse('http://127.0.0.1:8000/v1/audio/x.wav'),
     );
 
 void main() {
@@ -133,25 +166,25 @@ void main() {
   (
     ProviderContainer,
     FakeCountdownTicker,
-    FakePlaybackScheduler,
-  ) makeContainer() {
+    FakeAudioPlayback,
+  ) makeContainer({AudioAsset? seedAudio}) {
     final repo = FakeInstructionRepository()
       ..seed([
-        makeInstruction(packId, 'a'),
+        makeInstruction(packId, 'a', audio: seedAudio),
         makeInstruction(packId, 'b'),
         makeInstruction(packId, 'c'),
       ]);
     final ticker = FakeCountdownTicker();
-    final scheduler = FakePlaybackScheduler();
+    final audioPlayback = FakeAudioPlayback();
     final container = ProviderContainer(
       overrides: [
         instructionRepositoryProvider.overrideWithValue(repo),
         countdownTickerProvider.overrideWithValue(ticker),
-        playbackSchedulerProvider.overrideWithValue(scheduler),
+        audioPlaybackProvider.overrideWithValue(audioPlayback),
         countdownSecondsProvider.overrideWithValue(3),
       ],
     );
-    return (container, ticker, scheduler);
+    return (container, ticker, audioPlayback);
   }
 
   RecordingArgs args(String instructionId) =>
@@ -199,7 +232,7 @@ void main() {
     });
 
     test('countdown completion schedules playback completion', () async {
-      final (container, ticker, scheduler) = makeContainer();
+      final (container, ticker, audioPlayback) = makeContainer();
       await load(container, args('a'));
 
       final notifier = container.read(recordingProvider(args('a')).notifier);
@@ -208,9 +241,25 @@ void main() {
       ticker.fireTick();
       ticker.fireTick();
 
-      // Playing phase: the fake scheduler captured the completion callback.
+      // Playing phase: the fake audio playback captured the completion callback.
       expect(container.read(recordingProvider(args('a'))).recording.phase, RecordingPhase.playing);
-      scheduler.fireCompletion();
+      audioPlayback.fireCompletion();
+      expect(container.read(recordingProvider(args('a'))).recording.phase, RecordingPhase.completed);
+    });
+
+    test('plays the instruction real audio and completes on onPlayerComplete', () async {
+      final (container, ticker, audioPlayback) =
+          makeContainer(seedAudio: assetWithPayload());
+      await load(container, args('a'));
+
+      final notifier = container.read(recordingProvider(args('a')).notifier);
+      notifier.beginPreparation();
+      ticker.fireTick();
+      ticker.fireTick();
+      ticker.fireTick();
+
+      expect(audioPlayback.uri, isNotNull); // real asset source delivered, not the simulated fallback
+      audioPlayback.fireCompletion();
       expect(container.read(recordingProvider(args('a'))).recording.phase, RecordingPhase.completed);
     });
 
@@ -226,7 +275,7 @@ void main() {
     });
 
     test('full workflow: prepare -> play -> complete -> record', () async {
-      final (container, ticker, scheduler) = makeContainer();
+      final (container, ticker, audioPlayback) = makeContainer();
       await load(container, args('a'));
 
       final notifier = container.read(recordingProvider(args('a')).notifier);
@@ -236,7 +285,7 @@ void main() {
       ticker.fireTick();
       expect(container.read(recordingProvider(args('a'))).recording.phase, RecordingPhase.playing);
 
-      scheduler.fireCompletion();
+      audioPlayback.fireCompletion();
       expect(container.read(recordingProvider(args('a'))).recording.phase, RecordingPhase.completed);
 
       await notifier.markRecorded();

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 import 'package:navigation_voice_generator/core/error/failures.dart';
 import 'package:navigation_voice_generator/core/result/result.dart';
@@ -18,7 +18,7 @@ const _chitwan = VoiceProfile(
   label: 'Chitwan',
 );
 
-final _baseUri = Uri.parse('http://127.0.0.1:8000');
+const _baseUrl = 'http://127.0.0.1:8000';
 
 // A tiny valid WAV payload (1-second 22050 Hz mono PCM16 track).
 const String _wavHeader =
@@ -32,31 +32,36 @@ final Uint8List _wavBytes = Uint8List.fromList(_wavHeader.codeUnits);
 
 const _audioUrlPath = '/v1/audio/chitwan__abc123.wav';
 
+(Dio, DioAdapter) _mockedDio() {
+  final dio = Dio(BaseOptions(baseUrl: _baseUrl));
+  final adapter = DioAdapter(dio: dio);
+  return (dio, adapter);
+}
+
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
   test('generates audio and populates bytes and uri on success', () async {
-    final mockClient = MockClient((request) async {
-      expect(request.url.toString(), 'http://127.0.0.1:8000/v1/synthesize');
-      expect(request.method, 'POST');
-      final body = request.body;
-      expect(body, contains('देब्रे मोड्नुहोस्।'));
-      expect(body, contains('"voice":"chitwan"'));
-      expect(body, contains('"language":"ne"'));
-      return http.Response.bytes(
-        _wavBytes,
+    final (dio, adapter) = _mockedDio();
+    adapter.onPost(
+      '/v1/synthesize',
+      (server) => server.reply(
         200,
+        _wavBytes,
         headers: {
-          'content-type': 'audio/wav',
-          'x-audio-duration': '1000',
-          'x-audio-sample-rate': '22050',
-          'x-audio-voice': 'chitwan',
-          'x-audio-url': _audioUrlPath,
+          'content-type': ['audio/wav'],
+          'x-audio-duration': ['1000'],
+          'x-audio-sample-rate': ['22050'],
+          'x-audio-voice': ['chitwan'],
+          'x-audio-url': [_audioUrlPath],
         },
-      );
-    });
+      ),
+      data: {
+        'text': 'देब्रे मोड्नुहोस्।',
+        'voice': 'chitwan',
+        'language': 'ne',
+      },
+    );
+    final repository = HttpTtsRepository(dio: dio);
 
-    final repository = HttpTtsRepository(baseUri: _baseUri, client: mockClient);
     final result = await repository.generateAudio(
       const TtsRequest(
         text: 'देब्रे मोड्नुहोस्।',
@@ -75,16 +80,20 @@ void main() {
   });
 
   test('derives duration from the WAV header when header is missing', () async {
-    final mockClient = MockClient((_ ) async {
-      return http.Response.bytes(_wavBytes, 200, headers: {'content-type': 'audio/wav'});
-    });
+    final (dio, adapter) = _mockedDio();
+    adapter.onPost(
+      '/v1/synthesize',
+      (server) =>
+          server.reply(200, _wavBytes, headers: {'content-type': ['audio/wav']}),
+      data: {'text': 'Turn left', 'voice': 'joe', 'language': 'en'},
+    );
+    final repository = HttpTtsRepository(dio: dio);
 
-    final repository = HttpTtsRepository(baseUri: _baseUri, client: mockClient);
     final result = await repository.generateAudio(
-      const TtsRequest(
+      TtsRequest(
         text: 'Turn left',
         language: VoiceLanguage.english,
-        voice: VoiceProfile(id: 'joe', language: VoiceLanguage.english, label: 'Joe'),
+        voice: const VoiceProfile(id: 'joe', language: VoiceLanguage.english, label: 'Joe'),
       ),
     );
 
@@ -95,44 +104,50 @@ void main() {
   });
 
   test('returns TtsGenerationFailure on non-2xx response', () async {
-    final mockClient = MockClient((_) async => http.Response('nope', 500));
-
-    final repository = HttpTtsRepository(baseUri: _baseUri, client: mockClient);
-    final result = await repository.generateAudio(
-      const TtsRequest(
-        text: 'hi',
-        language: VoiceLanguage.nepali,
-        voice: _chitwan,
-      ),
+    final (dio, adapter) = _mockedDio();
+    adapter.onPost(
+      '/v1/synthesize',
+      (server) => server.reply(500, {'detail': 'boom'}),
+      data: {'text': 'hi', 'voice': 'chitwan', 'language': 'ne'},
     );
+    final repository = HttpTtsRepository(dio: dio);
 
+    final result = await repository.generateAudio(
+      const TtsRequest(text: 'hi', language: VoiceLanguage.nepali, voice: _chitwan),
+    );
     expect(result.isErr, isTrue);
     expect((result as Err<AudioAsset>).failure, isA<TtsGenerationFailure>());
   });
 
   test('returns TtsGenerationFailure on network error', () async {
-    final mockClient = MockClient((_) async => throw Exception('connection refused'));
-
-    final repository = HttpTtsRepository(baseUri: _baseUri, client: mockClient);
-    final result = await repository.generateAudio(
-      const TtsRequest(
-        text: 'hi',
-        language: VoiceLanguage.nepali,
-        voice: _chitwan,
+    final (dio, adapter) = _mockedDio();
+    adapter.onPost(
+      '/v1/synthesize',
+      (server) => server.throws(
+        0,
+        DioException(
+          requestOptions: RequestOptions(path: '/v1/synthesize'),
+          type: DioExceptionType.connectionError,
+        ),
       ),
+      data: {'text': 'hi', 'voice': 'chitwan', 'language': 'ne'},
     );
+    final repository = HttpTtsRepository(dio: dio);
 
+    final result = await repository.generateAudio(
+      const TtsRequest(text: 'hi', language: VoiceLanguage.nepali, voice: _chitwan),
+    );
     expect(result.isErr, isTrue);
     expect((result as Err<AudioAsset>).failure, isA<TtsGenerationFailure>());
   });
 
   test('returns TtsGenerationFailure for empty text without a request', () async {
-    final mockClient = MockClient((_) async => fail('should not be called'));
-    final repository = HttpTtsRepository(baseUri: _baseUri, client: mockClient);
+    final (dio, _) = _mockedDio();
+    final repository = HttpTtsRepository(dio: dio);
+
     final result = await repository.generateAudio(
       const TtsRequest(text: '   ', language: VoiceLanguage.nepali, voice: _chitwan),
     );
-
     expect(result.isErr, isTrue);
   });
 }

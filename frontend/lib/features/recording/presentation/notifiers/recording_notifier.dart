@@ -3,8 +3,8 @@ import 'package:navigation_voice_generator/app/di/presentation_providers.dart';
 import 'package:navigation_voice_generator/app/di/use_case_providers.dart';
 import 'package:navigation_voice_generator/core/error/failures.dart';
 import 'package:navigation_voice_generator/core/result/result.dart';
+import 'package:navigation_voice_generator/core/timing/audio_playback.dart';
 import 'package:navigation_voice_generator/core/timing/countdown_ticker.dart';
-import 'package:navigation_voice_generator/core/timing/playback_scheduler.dart';
 import 'package:navigation_voice_generator/features/instructions/domain/entities/instruction.dart';
 import 'package:navigation_voice_generator/features/instructions/domain/value_objects/instruction_id.dart';
 import 'package:navigation_voice_generator/features/recording/domain/value_objects/recording_state.dart';
@@ -14,8 +14,9 @@ import 'package:navigation_voice_generator/features/voice_packs/domain/value_obj
 /// Drives the recording workflow screen.
 ///
 /// The recording phase machine lives in the domain ([RecordingState]); this
-/// notifier coordinates it with playback simulation (auto-advancing to
-/// `completed` after the audio duration) and instruction navigation.
+/// notifier coordinates it with playback (playing the instruction's real
+/// generated audio and auto-advancing to `completed` when playback ends) and
+/// instruction navigation.
 class RecordingNotifier extends Notifier<RecordingScreenState> {
   RecordingNotifier(this.args);
 
@@ -26,15 +27,16 @@ class RecordingNotifier extends Notifier<RecordingScreenState> {
 
   late final int countdownSeconds = ref.read(countdownSecondsProvider);
   late final CountdownTicker _ticker = ref.read(countdownTickerProvider);
-  late final PlaybackScheduler _playback = ref.read(playbackSchedulerProvider);
+  late final AudioPlayback _audioPlayback = ref.read(audioPlaybackProvider);
 
-  /// How long simulated playback lasts before auto-completing.
-  static const playbackDuration = Duration(seconds: 3);
+  /// How long playback is simulated when the asset carries no real audio
+  /// (mock / metadata-only assets).
+  static const simulatedPlaybackDuration = Duration(seconds: 3);
 
   @override
   RecordingScreenState build() {
     ref.onDispose(_ticker.stop);
-    ref.onDispose(_playback.cancel);
+    ref.onDispose(_audioPlayback.cancel);
     _load();
     return const RecordingScreenState.loading();
   }
@@ -172,12 +174,23 @@ class RecordingNotifier extends Notifier<RecordingScreenState> {
   }
 
   void _schedulePlaybackComplete() {
-    // Simulated playback: after the audio duration the workflow completes.
-    _playback.schedule(playbackDuration, () {
-      if (state.recording.phase == RecordingPhase.playing) {
-        _completePlayback();
-      }
-    });
+    final current = state.instruction;
+    if (current == null) return;
+    final asset = current.audio;
+
+    _audioPlayback.start(
+      bytes: asset?.bytes,
+      uri: asset?.uri,
+      // Metadata-only (mock) assets fall back to a fixed simulated duration;
+      // real assets complete from the player's onPlayerComplete signal.
+      simulatedDuration:
+          asset?.duration ?? simulatedPlaybackDuration,
+      onComplete: () {
+        if (state.recording.phase == RecordingPhase.playing) {
+          _completePlayback();
+        }
+      },
+    );
   }
 
   void _completePlayback() {

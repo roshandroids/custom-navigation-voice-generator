@@ -145,7 +145,7 @@ class _ExportPageState extends ConsumerState<ExportPage> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'ZIP creation is simulated in this MVP — no files are written.',
+              'Clean clips are bundled as synthesized; recording clips include a 3-second preparation silence.',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -173,6 +173,7 @@ class _ExportPageState extends ConsumerState<ExportPage> {
     final result = await ExportVoicePack(
       ref.read(exportRepositoryProvider),
     ).execute(
+      packId: widget.packId,
       packName: pack.name.value,
       includeCleanAudio: _includeClean,
       includeRecordingAudio: _includeRecording,
@@ -184,7 +185,7 @@ class _ExportPageState extends ConsumerState<ExportPage> {
       if (result.isOk) {
         final bundle = (result as Ok<ExportBundle>).value;
         _exportResult =
-            'Export ready: ${bundle.fileCount} files, ${bundle.totalBytes} bytes (simulated).';
+            'Export ready: ${bundle.fileCount} files, ${bundle.totalBytes} bytes.';
       } else {
         _exportError = (result as Err<ExportBundle>).failure.message;
       }

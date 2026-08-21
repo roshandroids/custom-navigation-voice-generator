@@ -3,9 +3,59 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:navigation_voice_generator/app/app.dart';
+import 'package:navigation_voice_generator/app/di/providers.dart';
+import 'package:navigation_voice_generator/core/result/result.dart';
+import 'package:navigation_voice_generator/features/export/data/repositories/mock_export_repository.dart';
+import 'package:navigation_voice_generator/features/instructions/data/repositories/in_memory_instruction_repository.dart';
+import 'package:navigation_voice_generator/features/suggestions/data/repositories/mock_suggestion_repository.dart';
+import 'package:navigation_voice_generator/features/tts/data/repositories/mock_tts_repository.dart';
+import 'package:navigation_voice_generator/features/voice_packs/data/repositories/in_memory_voice_pack_repository.dart';
+import 'package:navigation_voice_generator/features/voice_packs/domain/entities/voice_pack.dart';
+import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/personality.dart';
+import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_language.dart';
+import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_pack_id.dart';
+import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_pack_name.dart';
+import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_profile.dart';
 
 void main() {
-  Widget app() => const ProviderScope(child: CustomNavApp());
+  ProviderContainer fakeContainer() {
+    final packs = InMemoryVoicePackRepository();
+    packs.create(
+      VoicePack(
+        id: const VoicePackId('seed-ne'),
+        name: (VoicePackName.create('My Nepali Voice') as Ok<VoicePackName>).value,
+        language: VoiceLanguage.nepali,
+        voice: VoiceCatalog.nepali.first,
+        personality: Personality.savage,
+        createdAt: DateTime(2026, 8, 15),
+      ),
+    );
+    packs.create(
+      VoicePack(
+        id: const VoicePackId('seed-en'),
+        name: (VoicePackName.create('English Daily') as Ok<VoicePackName>).value,
+        language: VoiceLanguage.english,
+        voice: VoiceCatalog.english.first,
+        personality: Personality.normal,
+        createdAt: DateTime(2026, 8, 14),
+      ),
+    );
+    return ProviderContainer(
+      overrides: [
+        voicePackRepositoryProvider.overrideWithValue(packs),
+        instructionRepositoryProvider
+            .overrideWithValue(InMemoryInstructionRepository.seeded()),
+        ttsRepositoryProvider.overrideWithValue(MockTtsRepository()),
+        suggestionRepositoryProvider.overrideWithValue(MockSuggestionRepository()),
+        exportRepositoryProvider.overrideWithValue(MockExportRepository()),
+      ],
+    );
+  }
+
+  Widget app() => UncontrolledProviderScope(
+        container: fakeContainer(),
+        child: const CustomNavApp(),
+      );
 
   Future<void> settle(WidgetTester tester) async {
     // The home/workspace screens show indeterminate progress indicators

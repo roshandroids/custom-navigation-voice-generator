@@ -1,76 +1,60 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:navigation_voice_generator/core/config/app_config.dart';
-import 'package:navigation_voice_generator/core/result/result.dart';
-import 'package:navigation_voice_generator/features/export/data/repositories/mock_export_repository.dart';
+import 'package:navigation_voice_generator/features/export/data/repositories/http_export_repository.dart';
 import 'package:navigation_voice_generator/features/export/domain/repositories/export_repository.dart';
-import 'package:navigation_voice_generator/features/instructions/data/repositories/in_memory_instruction_repository.dart';
+import 'package:navigation_voice_generator/features/instructions/data/repositories/http_instruction_repository.dart';
 import 'package:navigation_voice_generator/features/instructions/domain/repositories/instruction_repository.dart';
-import 'package:navigation_voice_generator/features/suggestions/data/repositories/mock_suggestion_repository.dart';
+import 'package:navigation_voice_generator/features/suggestions/data/repositories/http_suggestion_repository.dart';
 import 'package:navigation_voice_generator/features/suggestions/domain/repositories/suggestion_repository.dart';
 import 'package:navigation_voice_generator/features/tts/data/repositories/http_tts_repository.dart';
 import 'package:navigation_voice_generator/features/tts/domain/repositories/tts_repository.dart';
-import 'package:navigation_voice_generator/features/voice_packs/data/repositories/in_memory_voice_pack_repository.dart';
-import 'package:navigation_voice_generator/features/voice_packs/domain/entities/voice_pack.dart';
+import 'package:navigation_voice_generator/features/voice_packs/data/repositories/http_voice_pack_repository.dart';
 import 'package:navigation_voice_generator/features/voice_packs/domain/repositories/voice_pack_repository.dart';
-import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/personality.dart';
-import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_language.dart';
-import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_pack_id.dart';
-import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_pack_name.dart';
-import 'package:navigation_voice_generator/features/voice_packs/domain/value_objects/voice_profile.dart';
 
 /// Dependency injection wiring.
 ///
 /// Presentation never constructs repositories: it depends on these providers,
-/// which implement domain contracts. Swapping the mock TTS for the future
-/// HTTP implementation only changes the [ttsRepositoryProvider] override.
+/// which implement domain contracts. All data sources are API-backed by the
+/// FastAPI TTS service (voice packs, instructions, suggestions, TTS, export).
+/// Tests override the repo providers (or [dioProvider]) with fakes/mocks.
 final class Di {
   Di._();
 }
 
-/// Voice packs are stored in a single shared in-memory repository instance
-/// for the app session (not per-widget). Pre-seeded with a Nepali and an
-/// English sample pack matching the seeded instruction packs (`seed-ne` /
-/// `seed-en`) so the app demos end-to-end without Python.
+/// Shared HTTP client for the FastAPI service, using `dio`. Overridable in
+/// tests (e.g. with `http_mock_adapter`).
+final dioProvider = Provider<Dio>((ref) {
+  return Dio(
+    BaseOptions(
+      baseUrl: AppConfig.apiBaseUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 60),
+    ),
+  );
+});
+
+/// Voice packs, seeded server-side and persisted there.
 final voicePackRepositoryProvider = Provider<VoicePackRepository>((ref) {
-  final repository = InMemoryVoicePackRepository();
-  repository.create(
-    VoicePack(
-      id: const VoicePackId('seed-ne'),
-      name: (VoicePackName.create('My Nepali Voice') as Ok<VoicePackName>).value,
-      language: VoiceLanguage.nepali,
-      voice: VoiceCatalog.nepali.first,
-      personality: Personality.savage,
-      createdAt: DateTime(2026, 8, 15),
-    ),
-  );
-  repository.create(
-    VoicePack(
-      id: const VoicePackId('seed-en'),
-      name: (VoicePackName.create('English Daily') as Ok<VoicePackName>).value,
-      language: VoiceLanguage.english,
-      voice: VoiceCatalog.english.first,
-      personality: Personality.normal,
-      createdAt: DateTime(2026, 8, 14),
-    ),
-  );
-  return repository;
+  return HttpVoicePackRepository(dio: ref.watch(dioProvider));
 });
 
-/// Instructions are seeded once and shared app-wide.
+/// Instructions, seeded server-side and persisted there.
 final instructionRepositoryProvider = Provider<InstructionRepository>((ref) {
-  return InMemoryInstructionRepository.seeded();
+  return HttpInstructionRepository(dio: ref.watch(dioProvider));
 });
 
-/// Real TTS: the FastAPI service (Flutter → FastAPI → Piper). Swaps in place
-/// of the mock; tests may override this provider with a fake/mock.
+/// Real TTS: the FastAPI service (Flutter → FastAPI → Piper).
 final ttsRepositoryProvider = Provider<TtsRepository>((ref) {
-  return HttpTtsRepository(baseUri: Uri.parse(AppConfig.apiBaseUrl));
+  return HttpTtsRepository(dio: ref.watch(dioProvider));
 });
 
+/// Suggestion generation, computed server-side.
 final suggestionRepositoryProvider = Provider<SuggestionRepository>((ref) {
-  return MockSuggestionRepository();
+  return HttpSuggestionRepository(dio: ref.watch(dioProvider));
 });
 
+/// Export bundle assembly, performed server-side.
 final exportRepositoryProvider = Provider<ExportRepository>((ref) {
-  return MockExportRepository();
+  return HttpExportRepository(dio: ref.watch(dioProvider));
 });

@@ -8,13 +8,16 @@ class FakeExportRepository implements ExportRepository {
   Failure? failure;
   bool? lastIncludeClean;
   bool? lastIncludeRecording;
+  String? lastPackId;
 
   @override
   Future<Result<ExportBundle>> export({
+    required String packId,
     required String packName,
     required bool includeCleanAudio,
     required bool includeRecordingAudio,
   }) async {
+    lastPackId = packId;
     lastIncludeClean = includeCleanAudio;
     lastIncludeRecording = includeRecordingAudio;
     if (failure != null) return Err(failure!);
@@ -31,6 +34,7 @@ void main() {
       final useCase = ExportVoicePack(repository);
 
       final result = await useCase.execute(
+        packId: 'pack-1',
         packName: 'My Nepali Voice',
         includeCleanAudio: true,
         includeRecordingAudio: false,
@@ -40,12 +44,14 @@ void main() {
       final bundle = (result as Ok<ExportBundle>).value;
       expect(bundle.packName, 'My Nepali Voice');
       expect(bundle.fileCount, 25);
+      expect(repository.lastPackId, 'pack-1');
       expect(repository.lastIncludeClean, isTrue);
       expect(repository.lastIncludeRecording, isFalse);
     });
 
     test('rejects an empty pack name', () async {
       final result = await ExportVoicePack(FakeExportRepository()).execute(
+        packId: 'pack-1',
         packName: '  ',
         includeCleanAudio: true,
         includeRecordingAudio: false,
@@ -59,6 +65,7 @@ void main() {
       final repository = FakeExportRepository()
         ..failure = const RepositoryFailure('export failed');
       final result = await ExportVoicePack(repository).execute(
+        packId: 'pack-1',
         packName: 'My Nepali Voice',
         includeCleanAudio: true,
         includeRecordingAudio: true,

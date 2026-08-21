@@ -8,6 +8,7 @@ void main() {
     test('builds an export bundle with the requested options', () async {
       final repository = MockExportRepository();
       final result = await repository.export(
+        packId: 'pack-1',
         packName: 'My Nepali Voice',
         includeCleanAudio: true,
         includeRecordingAudio: false,
@@ -23,11 +24,13 @@ void main() {
     test('recording-ready export includes the same files', () async {
       final repository = MockExportRepository();
       final clean = await repository.export(
+        packId: 'pack-1',
         packName: 'Pack',
         includeCleanAudio: true,
         includeRecordingAudio: false,
       );
       final both = await repository.export(
+        packId: 'pack-1',
         packName: 'Pack',
         includeCleanAudio: true,
         includeRecordingAudio: true,

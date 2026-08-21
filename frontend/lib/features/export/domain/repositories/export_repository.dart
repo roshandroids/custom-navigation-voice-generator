@@ -20,6 +20,7 @@ final class ExportBundle {
 /// Contract for exporting a voice pack.
 abstract interface class ExportRepository {
   Future<Result<ExportBundle>> export({
+    required String packId,
     required String packName,
     required bool includeCleanAudio,
     required bool includeRecordingAudio,

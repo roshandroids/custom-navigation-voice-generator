@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:navigation_voice_generator/core/timing/audio_playback.dart';
 import 'package:navigation_voice_generator/core/timing/countdown_ticker.dart';
-import 'package:navigation_voice_generator/core/timing/playback_scheduler.dart';
 import 'package:navigation_voice_generator/features/instructions/presentation/notifiers/instruction_editor_notifier.dart';
 import 'package:navigation_voice_generator/features/instructions/presentation/state/instruction_editor_state.dart';
 import 'package:navigation_voice_generator/features/recording/presentation/notifiers/recording_notifier.dart';
@@ -90,9 +90,13 @@ final countdownTickerProvider = Provider<CountdownTicker>((ref) {
   return TimerCountdownTicker();
 });
 
-/// Provider for the playback scheduler — overridable in tests with a fake.
-final playbackSchedulerProvider = Provider<PlaybackScheduler>((ref) {
-  return TimerPlaybackScheduler();
+/// Real audio playback for the recording workflow. Owns a single
+/// [AudioplayersBackedPlayback]; the null-default [Provider] keeps it
+/// lazily created and disposed with the container. Overridable in tests.
+final audioPlaybackProvider = Provider<AudioPlayback>((ref) {
+  final playback = AudioplayersBackedPlayback();
+  ref.onDispose(playback.dispose);
+  return playback;
 });
 
 /// The default countdown duration in seconds (visual preparation phase).

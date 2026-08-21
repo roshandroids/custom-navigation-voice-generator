@@ -13,6 +13,7 @@ class MockExportRepository implements ExportRepository {
 
   @override
   Future<Result<ExportBundle>> export({
+    required String packId,
     required String packName,
     required bool includeCleanAudio,
     required bool includeRecordingAudio,

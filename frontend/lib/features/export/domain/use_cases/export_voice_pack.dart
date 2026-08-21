@@ -9,6 +9,7 @@ class ExportVoicePack {
   final ExportRepository _repository;
 
   Future<Result<ExportBundle>> execute({
+    required String packId,
     required String packName,
     required bool includeCleanAudio,
     required bool includeRecordingAudio,
@@ -19,6 +20,7 @@ class ExportVoicePack {
       );
     }
     return _repository.export(
+      packId: packId,
       packName: packName,
       includeCleanAudio: includeCleanAudio,
       includeRecordingAudio: includeRecordingAudio,
