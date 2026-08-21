@@ -82,3 +82,20 @@ def app_cache_dir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     cache_dir.mkdir(parents=True, exist_ok=True)
     monkeypatch.setattr(app_mod, "_CACHE_DIR", cache_dir)
     return cache_dir
+
+
+@pytest.fixture
+def app_store(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    """Wire a tmp-backed AppStore and export dir onto the FastAPI app."""
+    import server.app as app_mod
+    from server.store import AppStore
+
+    store_dir = tmp_path / "app"
+    store_dir.mkdir(parents=True, exist_ok=True)
+    store = AppStore(store_dir / "store.json")
+    monkeypatch.setattr(app_mod, "_STORE", store)
+    monkeypatch.setattr(app_mod, "_STORE_PATH", store_dir / "store.json")
+    export_dir = tmp_path / "export"
+    export_dir.mkdir(parents=True, exist_ok=True)
+    monkeypatch.setattr(app_mod, "_EXPORT_DIR", export_dir)
+    return store
