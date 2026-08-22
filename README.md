@@ -327,7 +327,24 @@ Output: `benchmark/output/waze/piper/<voice>/<phrase_id>.wav`, metadata in
 `benchmark/results/waze/`. Same gitignore rules as the main benchmark — never commit
 generated audio.
 
-## 16. Known limitations
+## 16. CI & showcase deployment
+
+CI and the showcase deployment are driven by **platform-ci's reusable
+workflows** (`roshandroids/platform-ci@v1`), configured in this repo through the
+thin, declarative [`ci.yaml`](ci.yaml) at the repo root — no pipeline logic is
+copied here.
+
+- `ci.yaml` sets the Flutter app root to `frontend/` and enables quality gates
+  (format / analyze / test) plus `deploy.showcase`.
+- `.github/workflows/ci.yml` runs quality on PRs and `main`.
+- `.github/workflows/deploy-showcase.yml` publishes the Flutter Web release into
+  the shared showcase repo `roshandroids/rsprojects-showcase/generated/
+  navigation-voice-generator/` (`SHOWCASE_PUSH_TOKEN` secret, tag-triggered).
+
+See platform-ci's `docs/SHOWCASE.md` and the showcase repo's
+`PROJECT_ONBOARDING.md` for the locked contract.
+
+## 17. Known limitations
 
 - **Nepali *quality* is unproven for every engine, including Piper.** Piper has
   official Nepali voices; the others don't (Kokoro/Chatterbox) or don't list Nepali
@@ -350,6 +367,8 @@ generated audio.
 ├── LICENSE                 (MIT — applies to *this project's code*, see docs/decisions/engine-licensing.md for engines)
 ├── .gitignore
 ├── .editorconfig
+├── ci.yaml                 (platform-ci consumer config — see §16)
+├── .github/workflows/      (thin callers of platform-ci reusable workflows)
 ├── pyproject.toml
 ├── benchmark/
 │   ├── corpus/             (phrases.json + schema)

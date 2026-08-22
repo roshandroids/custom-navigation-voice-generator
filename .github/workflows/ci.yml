@@ -1,0 +1,19 @@
+# Thin consumer workflow — quality only (format / analyze / test).
+# Builds and deploys are separate workflows; nothing here is duplicated
+# from platform-ci, which owns the implementation.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    uses: roshandroids/platform-ci/.github/workflows/quality.yml@v1
+    with:
+      config-path: ci.yaml

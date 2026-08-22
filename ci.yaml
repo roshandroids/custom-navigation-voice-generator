@@ -1,0 +1,57 @@
+# platform-ci consumer configuration.
+# See https://github.com/roshandroids/platform-ci (schema/ci.schema.json).
+# Keep everything expensive OFF unless explicitly opted in.
+schema: 1
+
+flutter: "3.38.9"
+kind: app
+
+# The Flutter application lives in frontend/ (repo root is Python benchmark).
+paths:
+  - frontend
+
+# Opt-in Node sidecar (not used here).
+node:
+  enabled: false
+  version: "22"
+
+# Quality gates — preserve formatting, analysis, and the unit/widget test suite.
+quality:
+  format: true
+  analyze: true
+  test: true
+  coverage: false
+  golden: false
+  integration: false
+  scripts: []
+
+# Builds are opt-in lists. Empty = do not call build.yml (showcase owns the web build).
+pr_builds: []
+main_builds: []
+release_targets: []
+
+build:
+  web:
+    args:
+      - "--release"
+
+# All deploy sinks default off — separate caller workflows when enabled.
+deploy:
+  firebase:
+    enabled: false
+    project_id: ""
+  pages:
+    enabled: false
+  demos:
+    enabled: false
+  showcase:
+    enabled: true
+    id: navigation-voice-generator
+
+publish:
+  pub:
+    enabled: false
+
+hooks:
+  local: true
+  before_build: ""

@@ -1,0 +1,30 @@
+# Consumer: publish this project's Flutter web build into the shared public
+# showcase repo (deploy.showcase in ci.yaml). This is a thin caller —
+# platform-ci owns the actual build + publish implementation.
+#
+# Trigger: tag push is the reliable canonical flow (see platform-ci
+# docs/SHOWCASE.md). Requires the private-repo secret SHOWCASE_PUSH_TOKEN
+# (fine-grained PAT, Contents: Read and write, scoped only to
+# roshandroids/rsprojects-showcase). Never commit or print the token.
+name: Publish showcase
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: showcase-generated-publish
+  cancel-in-progress: false
+
+jobs:
+  showcase:
+    uses: roshandroids/platform-ci/.github/workflows/deploy-showcase.yml@v1
+    with:
+      config-path: ci.yaml
+      version: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+    secrets: inherit
